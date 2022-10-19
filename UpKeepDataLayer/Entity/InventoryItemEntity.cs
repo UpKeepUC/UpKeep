@@ -16,7 +16,7 @@ namespace UpKeepData.Entity
         public string? QRCodeId { get; set; }
 
         public InventoryItemTypeEntity? InventoryItemType{get;set;} 
-        //public RoomEntity Room { get; set; }
+        public RoomEntity? Room { get; set; }
     }
 
     public class InventoryItemTypeEntity
