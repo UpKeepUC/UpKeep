@@ -12,5 +12,11 @@ namespace UpKeep.Controllers
         {
             _logger = logger;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
