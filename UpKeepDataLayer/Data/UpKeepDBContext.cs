@@ -6,9 +6,6 @@ namespace UpKeepData.Data
 {
     public partial class UpKeepDBContext : DbContext, IUpKeepDBContext
     {
-        public UpKeepDBContext()
-        {
-        }
 
         public UpKeepDBContext(DbContextOptions<UpKeepDBContext> options)
             : base(options)

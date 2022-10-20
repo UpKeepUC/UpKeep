@@ -2,7 +2,7 @@
 using UpKeepData.Entity;
 using UpKeepData.Interfaces;
 
-namespace UpKeepData.Data.Partials
+namespace UpKeepData.Data
 {
     public partial class UpKeepDBContext : DbContext, IUpKeepDBContext
     {
