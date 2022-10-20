@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UpKeepData.Entity;
+using UpKeepData.Interfaces;
 
 namespace UpKeepData.Data
 {
-    public partial class UpKeepDBContext : DbContext
+    public partial class UpKeepDBContext : DbContext, IUpKeepDBContext
     {
         public UpKeepDBContext()
         {
@@ -16,9 +17,7 @@ namespace UpKeepData.Data
 
         public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<EmployeeMaintenanceTask> EmployeeMaintenanceTasks { get; set; } = null!;
-        public virtual DbSet<InventoryItem> InventoryItems { get; set; } = null!;
         public virtual DbSet<InventoryItemMaintenanceTask> InventoryItemMaintenanceTasks { get; set; } = null!;
-        public virtual DbSet<InventoryItemType> InventoryItemTypes { get; set; } = null!;
         public virtual DbSet<MaintenanceTask> MaintenanceTasks { get; set; } = null!;
         public virtual DbSet<MaintenanceTaskType> MaintenanceTaskTypes { get; set; } = null!;
         public virtual DbSet<Person> People { get; set; } = null!;

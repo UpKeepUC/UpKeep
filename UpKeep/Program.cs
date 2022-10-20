@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
+using UpKeep.Mapper;
 using UpKeepData.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<UpKeepDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UpKeepDB")));
+builder.Services.AddDbContext<UpKeepDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UpKeepDB")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddAutoMapper(cfg => 
+{
+    cfg.AddProfile<MappingProfile>();
+});
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
