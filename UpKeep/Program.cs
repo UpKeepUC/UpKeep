@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using UpKeep.Mapper;
+using UpKeep.Services;
+using UpKeep.Services.Interfaces;
 using UpKeepData.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<MappingProfile>();
 });
+builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
