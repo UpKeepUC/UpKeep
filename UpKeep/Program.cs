@@ -1,7 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using UpKeep.Mapper;
+using UpKeep.Services;
+using UpKeep.Services.Interfaces;
+using UpKeepData.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<UpKeepDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UpKeepDB")));
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddAutoMapper(cfg => 
+{
+    cfg.AddProfile<MappingProfile>();
+});
+builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -16,7 +28,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
 
 app.MapControllerRoute(
     name: "default",

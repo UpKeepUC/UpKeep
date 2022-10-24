@@ -51,6 +51,7 @@ export class FetchData extends Component {
     );
   }
 
+//example of page calling controller
   async populateWeatherData() {
     const response = await fetch('weatherforecast');
     const data = await response.json();
