@@ -28,7 +28,7 @@ namespace UpKeep.Controllers
         [ProducesResponseType(typeof(InventoryItemTypeModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetInventoryItemTypeById(int id)
         {
-            return Ok(await _inventoryItemType.GetInventoryItemTypeModelById(id));
+            return Ok(await _inventoryItemType.GetInventoryItemTypeById(id));
         }
 
         [HttpPost, ActionName("UpdateInventoryItemType")]

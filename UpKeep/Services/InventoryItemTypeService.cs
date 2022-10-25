@@ -8,45 +8,45 @@ namespace UpKeep.Services
 {
     public class InventoryItemTypeService : IInventoryItemTypeService
     {
-        private IUpKeepDBContext upKeepDBContext;
-        private readonly IMapper mapper;
+        private IUpKeepDBContext _upKeepDBContext;
+        private readonly IMapper _mapper;
 
-        public InventoryItemTypeService(IUpKeepDBContext upKeepDBContext, IMapper mapper)
+        public InventoryItemTypeService(IUpKeepDBContext upKeepDBContext, IMapper _mapper)
         {
-            this.upKeepDBContext = upKeepDBContext;
-            this.mapper = mapper;
+            this._upKeepDBContext = upKeepDBContext;
+            this._mapper = _mapper;
         }
 
         public async Task<IEnumerable<InventoryItemTypeModel>> GetInventoryItemTypes()
         {
-            var result = await upKeepDBContext.GetInventoryItemTypes();
-            var models = mapper.Map<IEnumerable<InventoryItemTypeModel>>(result);
+            var result = await _upKeepDBContext.GetInventoryItemTypes();
+            var models = _mapper.Map<IEnumerable<InventoryItemTypeModel>>(result);
             return models;
         }
 
-        public async Task<InventoryItemTypeModel> GetInventoryItemTypeModelById(int id)
+        public async Task<InventoryItemTypeModel> GetInventoryItemTypeById(int id)
         {
-            var result = await upKeepDBContext.GetInventoryItemTypeById(id);
-            var model = mapper.Map<InventoryItemTypeModel>(result);
+            var result = await _upKeepDBContext.GetInventoryItemTypeById(id);
+            var model = _mapper.Map<InventoryItemTypeModel>(result);
             return model;
         }
 
         public async Task<int> UpdateInventoryItemType(InventoryItemTypeModel InventoryItemTypeModel)
         {
-            var model = mapper.Map<InventoryItemType>(InventoryItemTypeModel);
-            return await upKeepDBContext.UpdateInventoryItemType(model);
+            var model = _mapper.Map<InventoryItemType>(InventoryItemTypeModel);
+            return await _upKeepDBContext.UpdateInventoryItemType(model);
         }
 
         public async Task<int> AddInventoryItemType(InventoryItemTypeModel InventoryItemTypeModel)
         {
-            var model = mapper.Map<InventoryItemType>(InventoryItemTypeModel);
-            return await upKeepDBContext.UpdateInventoryItemType(model);
+            var model = _mapper.Map<InventoryItemType>(InventoryItemTypeModel);
+            return await _upKeepDBContext.UpdateInventoryItemType(model);
         }
 
         public async Task<int> DeleteInventoryItemType(InventoryItemTypeModel InventoryItemTypeModel)
         {
-            var model = mapper.Map<InventoryItemType>(InventoryItemTypeModel);
-            return await upKeepDBContext.DeleteInventoryItemType(model);
+            var model = _mapper.Map<InventoryItemType>(InventoryItemTypeModel);
+            return await _upKeepDBContext.DeleteInventoryItemType(model);
         }
     }
 }
