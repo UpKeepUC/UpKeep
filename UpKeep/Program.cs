@@ -14,6 +14,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<MappingProfile>();
 });
 builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
+builder.Services.AddTransient<IInventoryItemTypeService, InventoryItemTypeService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

@@ -1,6 +1,4 @@
-﻿
-
-namespace UpKeep.Models
+﻿namespace UpKeep.Models
 {
     public class InventoryItemModel
     {
@@ -16,7 +14,7 @@ namespace UpKeep.Models
         public int RoomId { get; set; }
         public string? QrcodeId { get; set; }
 
-        //public virtual InventoryItemType InventoryItemTypeModel { get; set; } = null!;
+        public virtual InventoryItemTypeModel InventoryItemTypeModel { get; set; } = null!;
         //public virtual RoomModel Room { get; set; } = null!;
         //public virtual ICollection<InventoryItemMaintenanceTask> InventoryItemMaintenanceTasksModel { get; set; }
     }
