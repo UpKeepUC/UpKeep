@@ -16,5 +16,13 @@ namespace UpKeepData.Interfaces
         Task<int> AddInventoryItem(InventoryItem inventoryItem);
         Task<int> DeleteInventoryItem(InventoryItem inventoryItem);
         #endregion
+
+        #region Inventory Item Types
+        Task<IEnumerable<InventoryItemType>> GetInventoryItemTypes();
+        Task<InventoryItemType> GetInventoryItemTypeById(int id);
+        Task<int> UpdateInventoryItemType(InventoryItemType inventoryItemType);
+        Task<int> AddInventoryItemType(InventoryItemType inventoryItemType);
+        Task<int> DeleteInventoryItemType(InventoryItemType inventoryItemType);
+        #endregion
     }
 }
