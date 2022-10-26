@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 export class CreateInventoryItem extends Component {
     static displayName = CreateInventoryItem.name;
 
+
+
     render() {
         return (
             <div className="CreateInventoryItem">
@@ -30,12 +32,12 @@ export class CreateInventoryItem extends Component {
 
                         <Form.Group className="mb-3" controlId="formInvItemCost">
                             <Form.Label>Inventory Item Cost</Form.Label>
-                            <Form.Control type="number" placeholder="Enter Inventory Item Cost" name="InvItemCost"/>
+                            <Form.Control type="number" placeholder="Enter Inventory Item Cost" name="invItemCost "/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formQRCodeID">
                             <Form.Label>QR Code ID</Form.Label>
-                            <Form.Control type="text" placeholder="Enter QR Code ID" name="QRCodeID"/>
+                            <Form.Control type="text" placeholder="Enter QR Code ID" name="QrCodeId"/>
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit
