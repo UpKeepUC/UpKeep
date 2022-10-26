@@ -1,6 +1,6 @@
 import { Counter } from "./components/Counter";
-import { CreateInventoryItem } from "./components/CreateInventoryItem";
 import { FetchData } from "./components/FetchData";
+import { Inventory } from "./components/Inventory";
 import { Home } from "./components/Home";
 
 const AppRoutes = [
@@ -17,8 +17,8 @@ const AppRoutes = [
     element: <FetchData />
     },
     {
-        path: '/Create-Inventory-Item',
-        element: <CreateInventoryItem />
+        path: '/Inventory',
+        element: <Inventory />
     }
 ];
 
