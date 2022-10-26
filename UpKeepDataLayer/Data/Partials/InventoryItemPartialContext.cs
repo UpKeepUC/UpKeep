@@ -7,7 +7,6 @@ namespace UpKeepData.Data
     public partial class UpKeepDBContext : DbContext, IUpKeepDBContext
     {
         public virtual DbSet<InventoryItem> InventoryItems { get; set; } = null!;
-        public virtual DbSet<InventoryItemType> InventoryItemTypes { get; set; } = null!;
 
         public async Task<IEnumerable<InventoryItem>> GetInventoryItems()
         {

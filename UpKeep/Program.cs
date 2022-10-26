@@ -3,17 +3,19 @@ using UpKeep.Mapper;
 using UpKeep.Services;
 using UpKeep.Services.Interfaces;
 using UpKeepData.Data;
+using UpKeepData.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<UpKeepDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UpKeepDB")));
+builder.Services.AddDbContext<IUpKeepDBContext, UpKeepDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UpKeepDB")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddAutoMapper(cfg => 
 {
     cfg.AddProfile<MappingProfile>();
 });
 builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
+builder.Services.AddTransient<IInventoryItemTypeService, InventoryItemTypeService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

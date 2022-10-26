@@ -10,6 +10,8 @@ namespace UpKeep.Mapper
         {
             CreateMap<InventoryItemModel, InventoryItem>()
                 .ReverseMap();
+            CreateMap<InventoryItemTypeModel, InventoryItemType>()
+                .ReverseMap();
         }
     }
 }
