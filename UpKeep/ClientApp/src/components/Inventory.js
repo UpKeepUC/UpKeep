@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { createRef } from 'react';
-import { Form, Button, Table, ButtonToolbar } from "react-bootstrap";
+import { Button, Table, ButtonToolbar } from "react-bootstrap";
 import { variables } from './Variables.js';
 import { CreateInventoryItemModal } from './CreateInventoryItemModal.js'
 
@@ -64,13 +63,13 @@ export class Inventory extends Component {
                     {
                         this.state.inventoryItems.map(item => {
                             return (
-                                <tr key={item.inventory_item_id}>
-                                    <td>{item.inventory_item_id}</td>
-                                    <td>{item.inventory_item_type}</td>
-                                    <td>{item.purchase_date}</td>
-                                    <td>{item.inventory_item_cost}</td>
-                                    <td>{item.room_id}</td>
-                                    <td>{item.QR_code}</td>
+                                <tr key={item.inventoryItemId}>
+                                    <td>{item.inventoryItemId}</td>
+                                    <td>{item.inventoryItemType}</td>
+                                    <td>{item.purchaseDate}</td>
+                                    <td>{item.inventoryItemCost}</td>
+                                    <td>{item.roomId}</td>
+                                    <td>{item.QRCodeId}</td>
                                 </tr>
                             )
                         })
