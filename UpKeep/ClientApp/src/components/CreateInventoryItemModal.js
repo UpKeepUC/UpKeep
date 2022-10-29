@@ -17,7 +17,7 @@ export class CreateInventoryItemModal extends Component {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				inventory_item_id: null,
+				inventoryItemId: null,
 				inventoryItemType: event.target.inventoryItemType.value,
 				purchaseDate: event.target.current.purchaseDate.value,
 				inventoryItemCost: event.target.inventoryItemCost.value,
