@@ -10,7 +10,7 @@ export class CreateInventoryItemModal extends Component {
     }
 	handleSubmit(event) {
 		event.preventDefault();
-		fetch(variables.API_URL + 'AddInventoryItem', {
+		fetch(variables.API_URL + 'InventoryItem/AddInventoryItem', {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
