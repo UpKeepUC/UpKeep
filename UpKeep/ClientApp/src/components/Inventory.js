@@ -16,6 +16,10 @@ export class Inventory extends Component {
         }
     }
 
+    componentDidMount() {
+        this.refreshList();
+    }
+
     refreshList() {
         fetch(variables.API_URL +'InventoryItem/GetInventoryItems')
             .then(response => response.json())
@@ -24,10 +28,9 @@ export class Inventory extends Component {
             })
     } 
 
-    componentDidMount() {
+    componentDidUpdate() {
         this.refreshList();
     }
-
 
     render() {
         const { inventoryItems } = this.state;

@@ -20,8 +20,8 @@ export class CreateInventoryItemModal extends Component {
 				inventory_item_id: null,
 				inventoryItemType: event.target.inventoryItemType.value,
 				purchaseDate: event.target.current.purchaseDate.value,
-				inventoryItemCost: Number(event.target.inventoryItemCost.value),
-				roomId: Number(event.target.roomId.value),
+				inventoryItemCost: event.target.inventoryItemCost.value,
+				roomId: event.target.roomId.value,
 				QRCodeId: event.target.QRCodeId.value
 			})
 		})
