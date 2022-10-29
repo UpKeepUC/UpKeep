@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
-import { Modal,Button,Row,Col,Form } from 'react-bootstrap';
-
+import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { variables } from './Variables.js';
 
 export class CreateInventoryItemModal extends Component {
     static displayName = CreateInventoryItemModal.name;
@@ -10,7 +10,28 @@ export class CreateInventoryItemModal extends Component {
     }
 	handleSubmit(event) {
 		event.preventDefault();
-		alert(event.target.inventoryItems.value);
+		fetch(variables.API_URL + 'AddInventoryItem', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				inventory_item_id: null,
+				inventoryItemType: event.target.inventoryItemType.value,
+				purchaseDate: event.target.current.purchaseDate.value,
+				inventoryItemCost: Number(event.target.inventoryItemCost.value),
+				roomId: Number(event.target.roomId.value),
+				QRCodeId: event.target.QRCodeId.value
+			})
+		})
+			.then(res => res.json())
+			.then((result) => {
+				alert(result);
+			},
+			(error) => {
+				alert('Failed');
+			})
     }
 
     render() {
