@@ -34,7 +34,10 @@ export class CreateInventoryItemModal extends Component {
 		})
 			.then(res => res.json())
 			.then((result) => {
-				alert(result);
+				if (result != 1) {
+					alert(result);
+				}
+				window.location.reload();
 			},
 			(error) => {
 				alert('Failed');

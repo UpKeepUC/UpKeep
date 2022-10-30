@@ -18,7 +18,7 @@ namespace UpKeep.Controllers
         }
 
         [HttpGet, ActionName("GetInventoryItems")]
-        [ProducesResponseType(typeof(IEnumerable<InventoryItemModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<InventoryItemModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetInventoryItems()
         {
             return Ok(await _inventoryItemService.GetInventoryItems());

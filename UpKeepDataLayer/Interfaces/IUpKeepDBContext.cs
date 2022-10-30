@@ -10,7 +10,7 @@ namespace UpKeepData.Interfaces
     public interface IUpKeepDBContext
     {
         #region Inventory Items
-        Task<IEnumerable<InventoryItem>> GetInventoryItems();
+        Task<ICollection<InventoryItem>> GetInventoryItems();
         Task<InventoryItem> GetInventoryItemById(int id);
         Task<int> UpdateInventoryItem(InventoryItem inventoryItem);
         Task<int> AddInventoryItem(InventoryItem inventoryItem);

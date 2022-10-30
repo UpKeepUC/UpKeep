@@ -17,10 +17,10 @@ namespace UpKeep.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<InventoryItemModel>> GetInventoryItems()
+        public async Task<ICollection<InventoryItemModel>> GetInventoryItems()
         {
             var result = await upKeepDBContext.GetInventoryItems();
-            var models = mapper.Map<IEnumerable<InventoryItemModel>>(result);
+            var models = mapper.Map<ICollection<InventoryItemModel>>(result);
             return models;
         }
 

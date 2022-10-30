@@ -21,20 +21,21 @@ export class Inventory extends Component {
     }
 
     refreshList() {
+        console.log('refreshing list')
         fetch(variables.API_URL +'InventoryItem/GetInventoryItems')
             .then(response => response.json())
             .then(data => {
-                this.setState({InventoryItems: data});
+                this.setState({ InventoryItems: data });
             })
     } 
 
-    componentDidUpdate() {
+    componentDidMount() {
         this.refreshList();
     }
 
     render() {
-        const { InventoryItems } = this.state;
         let addModalClose = () => this.setState({ addModalShow: false });
+        
     return (
         <div className="InventoryItem">
             <h1>Inventory Items</h1>
@@ -54,6 +55,7 @@ export class Inventory extends Component {
             <Table className='mt-4' striped bordered hover size="sm">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Inventory Item ID:</th>
                         <th>Inventory Item Type:</th>
                         <th>Purchase Date:</th>
@@ -64,15 +66,17 @@ export class Inventory extends Component {
                 </thead>
                 <tbody>
                     {
-                        this.state.InventoryItems.map(item => {
+                        this.state.InventoryItems.map((item, i) => {
+                            console.log(item);
                             return (
-                                <tr key={item.InventoryItemId}>
-                                    <td>{item.InventoryItemId}</td>
-                                    <td>{item.InventoryItemTypeId}</td>
-                                    <td>{item.PurchaseDate}</td>
-                                    <td>{item.InventoryItemCost}</td>
-                                    <td>{item.RoomId}</td>
-                                    <td>{item.QRCodeId}</td>
+                                <tr key={i}>
+                                    <td>{i}</td>
+                                    <td>{item.inventoryItemId}</td>
+                                    <td>{item.inventoryItemTypeModel.name}</td>
+                                    <td>{item.purchaseDate}</td>
+                                    <td>{item.inventoryItemCost}</td>
+                                    <td>{item.roomId}</td>
+                                    <td>{item.qrcodeId}</td>
                                 </tr>
                             )
                         })

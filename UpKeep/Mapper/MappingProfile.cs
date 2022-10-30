@@ -9,7 +9,8 @@ namespace UpKeep.Mapper
         public MappingProfile()
         {
             CreateMap<InventoryItemModel, InventoryItem>()
-                .ReverseMap();
+                .ReverseMap()
+                .ForMember(x => x.InventoryItemTypeModel, opt => opt.MapFrom(x => x.InventoryItemType));
             CreateMap<InventoryItemTypeModel, InventoryItemType>()
                 .ReverseMap();
         }

@@ -8,9 +8,12 @@ namespace UpKeepData.Data
     {
         public virtual DbSet<InventoryItem> InventoryItems { get; set; } = null!;
 
-        public async Task<IEnumerable<InventoryItem>> GetInventoryItems()
+        public async Task<ICollection<InventoryItem>> GetInventoryItems()
         {
-            return await InventoryItems.AsNoTracking().ToListAsync();
+            return await InventoryItems
+                .Include(x => x.InventoryItemType)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<InventoryItem> GetInventoryItemById(int id)
