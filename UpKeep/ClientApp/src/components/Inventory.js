@@ -11,7 +11,7 @@ export class Inventory extends Component {
     constructor() {
         super();
         this.state = {
-            inventoryItems: [],
+            InventoryItems: [],
             addModalShow : false,
         }
     }
@@ -24,7 +24,7 @@ export class Inventory extends Component {
         fetch(variables.API_URL +'InventoryItem/GetInventoryItems')
             .then(response => response.json())
             .then(data => {
-                this.setState({inventoryItems: data});
+                this.setState({InventoryItems: data});
             })
     } 
 
@@ -33,7 +33,7 @@ export class Inventory extends Component {
     }
 
     render() {
-        const { inventoryItems } = this.state;
+        const { InventoryItems } = this.state;
         let addModalClose = () => this.setState({ addModalShow: false });
     return (
         <div className="InventoryItem">
@@ -64,14 +64,14 @@ export class Inventory extends Component {
                 </thead>
                 <tbody>
                     {
-                        this.state.inventoryItems.map(item => {
+                        this.state.InventoryItems.map(item => {
                             return (
-                                <tr key={item.inventoryItemId}>
-                                    <td>{item.inventoryItemId}</td>
-                                    <td>{item.inventoryItemType}</td>
-                                    <td>{item.purchaseDate}</td>
-                                    <td>{item.inventoryItemCost}</td>
-                                    <td>{item.roomId}</td>
+                                <tr key={item.InventoryItemId}>
+                                    <td>{itemInventoryItemId}</td>
+                                    <td>{item.InventoryItemTypeId}</td>
+                                    <td>{item.PurchaseDate}</td>
+                                    <td>{item.InventoryItemCost}</td>
+                                    <td>{item.RoomId}</td>
                                     <td>{item.QRCodeId}</td>
                                 </tr>
                             )

@@ -8,7 +8,7 @@ export class CreateInventoryItemModal extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-			inventoryItems: [],
+			InventoryItems: [],
 
 
         }
@@ -22,11 +22,12 @@ export class CreateInventoryItemModal extends Component {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				inventoryItemId: 0,
-				inventoryItemType: {},
-				purchaseDate: Date.parse(document.getElementById("purchaseDate").value),
-				inventoryItemCost: String(document.getElementById("inventoryItemCost").value),
-				roomId: String(document.getElementById("roomId").value),
+				InventoryItemId: 0,
+				InventoryItemTypeId:0 ,
+				InventoryItemTypeModel: {},
+				PurchaseDate: Date.parse(document.getElementById("PurchaseDate").value),
+				InventoryItemCost: String(document.getElementById("InventoryItemCost").value),
+				RoomId: String(document.getElementById("RoomId").value),
 				QRCodeId: document.getElementById("QRCodeId").value
 			})
 		})
@@ -57,37 +58,37 @@ export class CreateInventoryItemModal extends Component {
 						<Row>
 							<Col sm={6}>
 								<Form onSubmit={this.handleSubmit}>
-									<Form.Group controlId= "inventoryItemType">
-										<Form.Label>Inventory Item Type</Form.Label>
+									<Form.Group controlId= "InventoryItemTypeId">
+										<Form.Label>Inventory Item Type Id</Form.Label>
 										<Form.Control
 											type="text"
-											name="inventoryItemType"
+											name="InventoryItemTypeId"
 											required
-											placeholder="Enter Inventory Item Type"
+											placeholder="Enter Inventory Item Type Id"
 										/>
 									</Form.Group>
-									<Form.Group controlId="purchaseDate">
+									<Form.Group controlId="PurchaseDate">
 										<Form.Label>Purchase Date</Form.Label>
 										<Form.Control
 											type="date"
-											name="purchaseDate"
+											name="PurchaseDate"
 											required
 										/>
 									</Form.Group>
-									<Form.Group controlId="inventoryItemCost">
+									<Form.Group controlId="InventoryItemCost">
 										<Form.Label>Inventory Item Cost</Form.Label>
 										<Form.Control
 											type="number"
-											name="inventoryItemCost"
+											name="InventoryItemCost"
 											required
 											placeholder="Enter Inventory Item Cost in $USD"
 										/>
 									</Form.Group>
-									<Form.Group controlId="roomId">
+									<Form.Group controlId="RoomId">
 										<Form.Label>Room ID Number</Form.Label>
 										<Form.Control
 											type="number"
-											name="roomId"
+											name="RoomId"
 											required
 											placeholder="Enter the Room Id"
 										/>
