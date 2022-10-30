@@ -6,10 +6,15 @@ export class CreateInventoryItemModal extends Component {
     static displayName = CreateInventoryItemModal.name;
 
     constructor(props) {
-        super(props);
+		super(props);
+		this.state = {
+			inventoryItems: [],
+
+
+        }
     }
 	handleSubmit(event) {
-		event.preventDefault();
+		event.preventDefault();		
 		fetch(variables.API_URL + 'InventoryItem/AddInventoryItem', {
 			method: 'POST',
 			headers: {
@@ -17,12 +22,12 @@ export class CreateInventoryItemModal extends Component {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				inventoryItemId: null,
-				inventoryItemType: event.target.inventoryItemType.value,
-				purchaseDate: event.target.current.purchaseDate.value,
-				inventoryItemCost: event.target.inventoryItemCost.value,
-				roomId: event.target.roomId.value,
-				QRCodeId: event.target.QRCodeId.value
+				inventoryItemId: 0,
+				inventoryItemType: {},
+				purchaseDate: Date.parse(document.getElementById("purchaseDate").value),
+				inventoryItemCost: String(document.getElementById("inventoryItemCost").value),
+				roomId: String(document.getElementById("roomId").value),
+				QRCodeId: document.getElementById("QRCodeId").value
 			})
 		})
 			.then(res => res.json())
@@ -50,7 +55,7 @@ export class CreateInventoryItemModal extends Component {
 				</Modal.Header>
 					<Modal.Body>
 						<Row>
-							<Col sm={8}>
+							<Col sm={6}>
 								<Form onSubmit={this.handleSubmit}>
 									<Form.Group controlId= "inventoryItemType">
 										<Form.Label>Inventory Item Type</Form.Label>
