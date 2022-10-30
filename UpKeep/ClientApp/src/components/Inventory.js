@@ -67,7 +67,7 @@ export class Inventory extends Component {
                         this.state.InventoryItems.map(item => {
                             return (
                                 <tr key={item.InventoryItemId}>
-                                    <td>{itemInventoryItemId}</td>
+                                    <td>{item.InventoryItemId}</td>
                                     <td>{item.InventoryItemTypeId}</td>
                                     <td>{item.PurchaseDate}</td>
                                     <td>{item.InventoryItemCost}</td>

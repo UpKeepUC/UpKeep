@@ -19,13 +19,14 @@ export class CreateInventoryItemModal extends Component {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+
 			},
 			body: JSON.stringify({
 				InventoryItemId: 0,
-				InventoryItemTypeId:0 ,
+				InventoryItemTypeId: document.getElementById("InventoryItemTypeId").value,
 				InventoryItemTypeModel: {},
-				PurchaseDate: Date.parse(document.getElementById("PurchaseDate").value),
+				PurchaseDate: new Date(document.getElementById("PurchaseDate").value),
 				InventoryItemCost: String(document.getElementById("InventoryItemCost").value),
 				RoomId: String(document.getElementById("RoomId").value),
 				QRCodeId: document.getElementById("QRCodeId").value

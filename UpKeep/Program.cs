@@ -28,6 +28,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// CORS - Allow calling the API from WebBrowsers
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    .SetIsOriginAllowed(origin => true));// Allow any origin 
+
 app.UseStaticFiles();
 app.UseRouting();
 
