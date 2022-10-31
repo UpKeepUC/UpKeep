@@ -21,7 +21,6 @@ export class Inventory extends Component {
     }
 
     refreshList() {
-        console.log('refreshing list')
         fetch(variables.API_URL +'InventoryItem/GetInventoryItems')
             .then(response => response.json())
             .then(data => {
@@ -67,7 +66,6 @@ export class Inventory extends Component {
                 <tbody>
                     {
                         this.state.InventoryItems.map((item, i) => {
-                            console.log(item);
                             return (
                                 <tr key={i}>
                                     <td>{i}</td>
