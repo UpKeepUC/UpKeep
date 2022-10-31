@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
-import { variables } from './Variables.js';
+
 
 export class CreateInventoryItemModal extends Component {
     static displayName = CreateInventoryItemModal.name;
@@ -36,7 +36,7 @@ export class CreateInventoryItemModal extends Component {
     }
 
     getInventoryItemTypes() {
-        fetch(variables.API_URL + 'InventoryItemType/GetInventoryItemTypes')
+        fetch('https://localhost:7285/api/InventoryItemType/GetInventoryItemTypes')
             .then(response => response.json())
             .then(data => {
                 this.setState({ InventoryItemTypes: data });
@@ -76,7 +76,7 @@ export class CreateInventoryItemModal extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch(variables.API_URL + 'InventoryItem/AddInventoryItem', {
+        fetch('https://localhost:7285/api/InventoryItem/AddInventoryItem', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

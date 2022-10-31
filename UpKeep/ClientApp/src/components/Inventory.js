@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { Button, Table, ButtonToolbar } from "react-bootstrap";
-import { variables } from './Variables.js';
 import { CreateInventoryItemModal } from './CreateInventoryItemModal.js'
 
 
@@ -21,7 +20,7 @@ export class Inventory extends Component {
     }
 
     refreshList() {
-        fetch(variables.API_URL +'InventoryItem/GetInventoryItems')
+        fetch('https://localhost:7285/api/InventoryItem/GetInventoryItems')
             .then(response => response.json())
             .then(data => {
                 this.setState({ InventoryItems: data });
