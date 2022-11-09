@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
-import { Inventory } from './components/Inventory';
 import { Layout } from './components/Layout';
 import './custom.css';
 
