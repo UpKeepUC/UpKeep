@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using UpKeep.Models;
-using UpKeepData.Entity;
+﻿using UpKeep.Models;
 
 namespace UpKeep.Services.Interfaces
 {
