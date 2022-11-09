@@ -18,8 +18,6 @@ namespace UpKeepData.Data
         public virtual DbSet<MaintenanceTask> MaintenanceTasks { get; set; } = null!;
         public virtual DbSet<MaintenanceTaskType> MaintenanceTaskTypes { get; set; } = null!;
         public virtual DbSet<Person> People { get; set; } = null!;
-        public virtual DbSet<Room> Rooms { get; set; } = null!;
-        public virtual DbSet<RoomType> RoomTypes { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

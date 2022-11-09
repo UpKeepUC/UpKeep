@@ -24,5 +24,21 @@ namespace UpKeepData.Interfaces
         Task<int> AddInventoryItemType(InventoryItemType inventoryItemType);
         Task<int> DeleteInventoryItemType(InventoryItemType inventoryItemType);
         #endregion
+
+        #region Room
+        Task<ICollection<InventoryItem>> GetRooms();
+        Task<InventoryItem> GetRoomById(int id);
+        Task<int> UpdateRoom(Room Room);
+        Task<int> AddRoom(Room Room);
+        Task<int> DeleteRoom(Room Room);
+        #endregion
+
+        #region Room Types
+        Task<ICollection<InventoryItem>> GetRoomTypes();
+        Task<InventoryItem> GetRoomTypeById(int id);
+        Task<int> UpdateRoomType(RoomType RoomType);
+        Task<int> AddRoomType(RoomType RoomType);
+        Task<int> DeleteRoomType(RoomType RoomType);
+        #endregion
     }
 }
