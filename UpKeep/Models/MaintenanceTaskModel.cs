@@ -16,7 +16,7 @@ namespace UpKeep.Models
         public string? Name { get; set; }
         public string? Description { get; set; }
 
-        public virtual MaintenanceTaskType MaintenanceTaskType { get; set; } = null!;
+        public virtual MaintenanceTaskTypeModel MaintenanceTaskTypeModel { get; set; } = null!;
         //public virtual ICollection<EmployeeMaintenanceTask> EmployeeMaintenanceTasks { get; set; }
     }
 }
