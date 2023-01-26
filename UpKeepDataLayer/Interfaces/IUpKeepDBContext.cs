@@ -33,6 +33,14 @@ namespace UpKeepData.Interfaces
         Task<int> DeleteMaintenanceTask(MaintenanceTask maintenanceTask);
         #endregion
 
+        #region Maintenance Task Type
+        Task<IEnumerable<MaintenanceTaskType>> GetMaintenanceTaskTypes();
+        Task<MaintenanceTaskType> GetMaintenanceTaskTypeById(int id);
+        Task<int> UpdateMaintenanceTaskType(MaintenanceTaskType maintenanceTaskType);
+        Task<int> AddMaintenanceTaskType(MaintenanceTaskType maintenanceTaskType);
+        Task<int> DeleteMaintenanceTaskType(MaintenanceTaskType maintenanceTaskType);
+        #endregion
+
         #region Room
         Task<ICollection<Room>> GetRooms();
         Task<Room> GetRoomById(int id);
