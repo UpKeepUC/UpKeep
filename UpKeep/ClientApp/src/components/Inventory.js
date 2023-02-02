@@ -112,6 +112,7 @@ export class Inventory extends Component {
                                     <td>
                                         <Button variant="danger" onClick={() => this.handleDelete(item)}>Delete</Button>
                                         <Button variant="warning" onClick={() => this.handleUpdate(item.inventoryItemId)}>Update</Button>
+                                        <UpdateInventoryItemModal dataFromParent={item} show={this.state.updateModalShow} onHide={updateModalClose}/>
                                     </td>
 
                                 </tr>

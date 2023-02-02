@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { UseState, Component } from 'react';
 import { Modal, Form, Button } from "react-bootstrap";
 
 export class UpdateInventoryItemModal extends Component {
@@ -15,10 +15,9 @@ export class UpdateInventoryItemModal extends Component {
     }
 
     componentDidMount() {
-        fetch(`https://localhost:7285/api/InventoryItem/GetInventoryItem/${this.props.selectedItemId}`)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
+        let data = this.props.dataFromParent;
+
+        this.setState({
                     inventoryItemId: data.inventoryItemId,
                     inventoryItemType: data.inventoryItemTypeModel.name,
                     purchaseDate: data.purchaseDate,
@@ -26,7 +25,19 @@ export class UpdateInventoryItemModal extends Component {
                     roomId: data.roomId,
                     qrcodeId: data.qrcodeId,
                 });
-            });
+
+        //fetch(`https://localhost:7285/api/InventoryItem/GetInventoryItem/` + this.props.selectedItemId)
+        //    .then(response => response.json())
+        //    .then(data => {
+        //        this.setState({
+        //            inventoryItemId: data.inventoryItemId,
+        //            inventoryItemType: data.inventoryItemTypeModel.name,
+        //            purchaseDate: data.purchaseDate,
+        //            inventoryItemCost: data.inventoryItemCost,
+        //            roomId: data.roomId,
+        //            qrcodeId: data.qrcodeId,
+        //        });
+        //    });
     }
 
     handleSubmit(event) {
