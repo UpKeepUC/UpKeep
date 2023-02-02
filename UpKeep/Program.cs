@@ -16,6 +16,8 @@ builder.Services.AddAutoMapper(cfg =>
 });
 builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
 builder.Services.AddTransient<IInventoryItemTypeService, InventoryItemTypeService>();
+builder.Services.AddTransient<IMaintenanceTaskService, MaintenanceTaskService>();
+builder.Services.AddTransient<IMaintenanceTaskTypeService, MaintenanceTaskTypeService>();
 builder.Services.AddTransient<IRoomTypeService, RoomTypeService>();
 builder.Services.AddTransient<IRoomService, RoomService>();
 builder.Services.AddControllersWithViews();
