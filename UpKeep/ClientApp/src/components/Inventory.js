@@ -28,14 +28,25 @@ export class Inventory extends Component {
                 this.setState({ InventoryItems: data });
             })
     }
-    handleDelete(id) {
+    handleDelete(item) {
+        console.log(item);
+
         if (window.confirm("Are you sure you want to delete this item?")) {
-            fetch('https://localhost:7285/api/InventoryItem/DeleteInventoryItem/' + id, {
-                method: 'DELETE',
+            fetch('https://localhost:7285/api/InventoryItem/DeleteInventoryItem/', {
+                method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
+                body: JSON.stringify({
+                    InventoryItemId: item.inventoryItemId,
+                    InventoryItemTypeId: item.inventoryItemTypeId,
+                    InventoryItemTypeModel: item.inventoryItemTypeModel ?? null,
+                    PurchaseDate: item.purchaseDate,
+                    InventoryItemCost: item.inventoryItemCost,
+                    RoomId: item.roomId,
+                    QrcodeId: item.qrcodeId,
+                }),
             })
                 .then(() => {
                     this.refreshList();
@@ -99,7 +110,7 @@ export class Inventory extends Component {
                                     <td>{item.roomId}</td>
                                     <td>{item.qrcodeId}</td>
                                     <td>
-                                        <Button variant="danger" onClick={() => this.handleDelete(item.inventoryItemId)}>Delete</Button>
+                                        <Button variant="danger" onClick={() => this.handleDelete(item)}>Delete</Button>
                                         <Button variant="warning" onClick={() => this.handleUpdate(item.inventoryItemId)}>Update</Button>
                                     </td>
 
