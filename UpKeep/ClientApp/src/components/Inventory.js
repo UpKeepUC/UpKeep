@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { Button, Table, ButtonToolbar } from "react-bootstrap";
 import { CreateInventoryItemModal } from './CreateInventoryItemModal.js'
+import { UpdateInventoryItemModal } from './UpdateInventoryItemModal.js'
+
 
 
 
@@ -25,7 +27,26 @@ export class Inventory extends Component {
             .then(data => {
                 this.setState({ InventoryItems: data });
             })
-    } 
+    }
+    handleDelete(id) {
+        if (window.confirm("Are you sure you want to delete this item?")) {
+            fetch('https://localhost:7285/api/InventoryItem/DeleteInventoryItem/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(() => {
+                    this.refreshList();
+                });
+        }
+    }
+
+    handleUpdate(id) {
+        this.setState({ updateModalShow: true, selectedItemId: id });
+    }
+
 
     componentDidMount() {
         this.refreshList();
@@ -33,6 +54,8 @@ export class Inventory extends Component {
 
     render() {
         let addModalClose = () => this.setState({ addModalShow: false });
+        let updateModalClose = () => this.setState({ updateModalShow: false });
+
         
     return (
         <div className="InventoryItem">
@@ -57,9 +80,10 @@ export class Inventory extends Component {
                         <th>Inventory Item ID:</th>
                         <th>Inventory Item Type:</th>
                         <th>Purchase Date:</th>
-                        <th>Inventory Item Cost</th>
-                        <th>Room ID</th>
-                        <th>QR Code ID</th>
+                        <th>Inventory Item Cost:</th>
+                        <th>Room ID:</th>
+                        <th>QR Code ID:</th>
+                        <th>Edit Item:</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,6 +98,11 @@ export class Inventory extends Component {
                                     <td>{item.inventoryItemCost}</td>
                                     <td>{item.roomId}</td>
                                     <td>{item.qrcodeId}</td>
+                                    <td>
+                                        <Button variant="danger" onClick={() => this.handleDelete(item.inventoryItemId)}>Delete</Button>
+                                        <Button variant="warning" onClick={() => this.handleUpdate(item.inventoryItemId)}>Update</Button>
+                                    </td>
+
                                 </tr>
                             )
                         })
