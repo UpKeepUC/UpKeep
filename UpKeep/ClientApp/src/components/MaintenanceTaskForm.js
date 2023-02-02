@@ -12,9 +12,44 @@ const MaintenanceTaskForm = () => {
     const [completedDate, setCompletedDate] = useState('');
 
 
+    //const handleSubmit = (e) => {
+    //    e.preventDefault();
+    //    // Add code to handle form submission here
+    //}
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add code to handle form submission here
+
+        console.log(task);
+
+        fetch('https://localhost:7285/api/MaintenanceTask/AddMaintenanceTask', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify({
+                MaintenanceTaskId: 0,
+                MaintenanceTaskTypeId: 1,
+                MaintenanceTaskTypeModel: {},
+                Name: task,
+                Description: description,
+                MaintenanceTaskDueDate: new Date(dueDate),
+                MaintenanceTaskCompletedDate: null
+            })
+        })
+            .then(res => res.json())
+            .then((result) => {
+                if (result != 1) {
+                    alert(result);
+                }
+                window.location.reload();
+            },
+                (error) => {
+                    alert('Failed');
+                })
+    
     }
 
     return (
