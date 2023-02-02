@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import MaintenanceTaskForm from './MaintenanceTaskForm';
 
 export class MaintenanceTask extends Component {
     static displayName = MaintenanceTask.name;
@@ -7,8 +8,9 @@ export class MaintenanceTask extends Component {
 
         return (
             <div>
-                <h1>IMaintenanceTask</h1>
+                <h1>MaintenanceTask</h1>
                 <p>This page will be used to create Maintenance Tasks. </p>
+                <MaintenanceTaskForm />
             </div>
         );
     }
