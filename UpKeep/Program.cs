@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using UpKeep.Mapper;
 using UpKeep.Services;
 using UpKeep.Services.Interfaces;
@@ -14,12 +15,15 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<MappingProfile>();
 });
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddHttpClient("qrCodeClient", c => c.BaseAddress = new Uri(builder.Configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"]));
 builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
 builder.Services.AddTransient<IInventoryItemTypeService, InventoryItemTypeService>();
 builder.Services.AddTransient<IMaintenanceTaskService, MaintenanceTaskService>();
 builder.Services.AddTransient<IMaintenanceTaskTypeService, MaintenanceTaskTypeService>();
 builder.Services.AddTransient<IRoomTypeService, RoomTypeService>();
 builder.Services.AddTransient<IRoomService, RoomService>();
+builder.Services.AddTransient<IQRCodeService, QRCodeService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
