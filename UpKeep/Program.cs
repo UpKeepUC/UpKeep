@@ -1,15 +1,22 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using UpKeep.Mapper;
 using UpKeep.Services;
 using UpKeep.Services.Interfaces;
 using UpKeepData.Data;
+using UpKeepData.Data.UpKeepIdentityContext;
 using UpKeepData.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<IUpKeepDBContext, UpKeepDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UpKeepDB")));
+builder.Services.AddDbContext<UpKeepIdentityContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("UpKeepIdentityDB")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddAutoMapper(cfg => 
 {
@@ -25,6 +32,33 @@ builder.Services.AddTransient<IRoomTypeService, RoomTypeService>();
 builder.Services.AddTransient<IRoomService, RoomService>();
 builder.Services.AddTransient<IQRCodeService, QRCodeService>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<UpKeepIdentityContext>(); 
+
+builder.Services.Configure<IdentityOptions>(options => 
+{ 
+    options.Password.RequireDigit = false; 
+    options.Password.RequireNonAlphanumeric = false; 
+    options.Password.RequireUppercase = false; 
+});
+var jwtSettings = builder.Configuration.GetSection("JwtSettings"); 
+builder.Services.AddAuthentication(opt =>
+{ 
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; 
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+}).AddJwtBearer(options => 
+{ 
+    options.TokenValidationParameters = new TokenValidationParameters 
+    { 
+        ValidateIssuer = false, 
+        ValidateAudience = false, 
+        ValidateLifetime = true, 
+        ValidateIssuerSigningKey = true, 
+        ValidIssuer = jwtSettings.GetSection("validIssuer").Value, 
+        ValidAudience = jwtSettings.GetSection("validAudience").Value, 
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value)) 
+    }; 
+});
 
 var app = builder.Build();
 
@@ -46,6 +80,9 @@ app.UseCors(x => x
 
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
