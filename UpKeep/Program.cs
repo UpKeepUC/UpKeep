@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using UpKeep.Mapper;
 using UpKeep.Services;
@@ -60,6 +61,17 @@ builder.Services.AddAuthentication(opt =>
     }; 
 });
 
+builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "UpKeep Swagger UI",
+        Description = "UpKeep Swagger UI",
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,6 +92,11 @@ app.UseCors(x => x
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Showing API V1");
+}); 
 
 app.UseAuthentication();
 app.UseAuthorization();
