@@ -7,7 +7,7 @@ const columns = [
     { field: 'inventoryItemTypeModel', headerName: 'Item Type', width: 150, valueFormatter: ({ value }) => value.name },
     { field: 'inventoryItemCost', headerName: 'Item Cost', width: 150 },
     { field: 'purchaseDate', headerName: 'Purchase Date', width: 150 },
-    { field: 'roomModel', headerName: 'Room', width: 150, valueFormatter: ({ value }) => value.roomLocation },
+    { field: 'roomModel', headerName: 'Room', width: 250, valueFormatter: ({ value }) => value.roomLocation + ' - ' + value.roomTypeModel.name + ' - ' + value.roomNumber },
 ];
 
 const inventoryItemTableStyles = {
