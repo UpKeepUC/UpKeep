@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'UpKeepUI'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6CA06E8AB9344559A74D7BB15FBF6A70 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_58A635D4732C475E802D279B26B43F9D }}
           package: .
