@@ -13,6 +13,7 @@ namespace UpKeepData.Entity
         public int RoomId { get; set; }
         public string? RoomLocation { get; set; }
         public int RoomTypeId { get; set; }
+        public string? RoomNumber { get; set; }
 
         public virtual RoomType RoomType { get; set; } = null!;
         public virtual ICollection<InventoryItem> InventoryItems { get; set; }

@@ -19,7 +19,7 @@ namespace UpKeep.Mapper
                 .ForMember(x => x.MaintenanceTaskTypeModel, opt => opt.MapFrom(x => x.MaintenanceTaskType));
             CreateMap<RoomModel, Room>()
                 .ReverseMap()
-                .ForMember(x => x.RoomType, opt => opt.MapFrom(x => x.RoomType));
+                .ForMember(x => x.RoomTypeModel, opt => opt.MapFrom(x => x.RoomType));
             CreateMap<InventoryItemTypeModel, InventoryItemType>()
                 .ReverseMap();
             CreateMap<MaintenanceTaskTypeModel, MaintenanceTaskType>()

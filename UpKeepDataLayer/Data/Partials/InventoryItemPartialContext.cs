@@ -10,11 +10,23 @@ namespace UpKeepData.Data
 
         public async Task<ICollection<InventoryItem>> GetInventoryItems()
         {
-            return await InventoryItems
+            var items = await InventoryItems
                 .Include(x => x.InventoryItemType)
                 .Include(x => x.Room)
                 .AsNoTracking()
                 .ToListAsync();
+
+            foreach(var item in items)
+            {
+                var roomType = await RoomTypes.Where(x => x.RoomTypeId == item.Room.RoomTypeId).FirstAsync() ?? null;
+
+                if(roomType != null)
+                {
+                    item.Room.RoomType = roomType;
+                }               
+            }
+
+            return items;
         }
 
         public async Task<InventoryItem> GetInventoryItemById(int id)

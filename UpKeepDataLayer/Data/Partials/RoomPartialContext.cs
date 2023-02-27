@@ -29,6 +29,7 @@ namespace UpKeepData.Data
             var entry = Entry(Room);
             entry.Property(p => p.RoomTypeId).IsModified = true;
             entry.Property(p => p.RoomLocation).IsModified = true;
+            entry.Property(p => p.RoomNumber).IsModified = true;
             entry.Property(p => p.RoomId).IsModified = true;
 
             return await SaveChangesAsync();

@@ -181,6 +181,8 @@ namespace UpKeepData.Data
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
+                entity.Property(e => e.RoomNumber).HasMaxLength(50);
+
                 entity.HasOne(d => d.RoomType)
                     .WithMany(p => p.Rooms)
                     .HasForeignKey(d => d.RoomTypeId)
