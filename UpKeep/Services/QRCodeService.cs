@@ -16,30 +16,31 @@ namespace UpKeep.Services
             _configuration = configuration; 
         }
 
-        public async Task<byte[]> GenerateQRCodeForInventoryItem()
+        public async Task<byte[]> GenerateQRCodeForInventoryItem(string link)
         {
+            var linkURI = new Uri("link");
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"{_configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"]}/qrcode/text"),
+                RequestUri = new Uri($"https://{_configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"]}/qrcode/text"),
                 Headers =
-    {
-        { "X-RapidAPI-Key", _configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Key"] },
-        { "X-RapidAPI-Host", _configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"] },
-    },
-                Content = new StringContent("{\r\n    \"data\": \"https://google.com\",\r\n        \"style\": {\r\n        \"module\": {\r\n            \"color\": \"black\",\r\n            \"shape\": \"default\"\r\n        },\r\n        \"inner_eye\": {\r\n            \"shape\": \"default\"\r\n        },\r\n        \"outer_eye\": {\r\n            \"shape\": \"default\"\r\n        },\r\n        \"background\": {}\r\n    },\r\n    \"size\": {\r\n        \"width\": 200,\r\n        \"quiet_zone\": 4,\r\n        \"error_correction\": \"M\"\r\n    },\r\n    \"output\": {\r\n        \"filename\": \"qrcode\",\r\n        \"format\": \"png\"\r\n    }\r\n}")
+                {
+                    { "X-RapidAPI-Key", _configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Key"] },
+                    { "X-RapidAPI-Host", _configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"] },
+                },
+                Content = new StringContent("{" + $"\r\n    \"data\": \"{linkURI}\",\r\n" +        "\"style\": {\r\n        \"module\": {\r\n            \"color\": \"black\",\r\n            \"shape\": \"default\"\r\n        },\r\n        \"inner_eye\": {\r\n            \"shape\": \"default\"\r\n        },\r\n        \"outer_eye\": {\r\n            \"shape\": \"default\"\r\n        },\r\n        \"background\": {}\r\n    },\r\n    \"size\": {\r\n        \"width\": 200,\r\n        \"quiet_zone\": 4,\r\n        \"error_correction\": \"M\"\r\n    },\r\n    \"output\": {\r\n        \"filename\": \"qrcode\",\r\n        \"format\": \"png\"\r\n    }\r\n}")
                 {
                     Headers =
-        {
-            ContentType = new MediaTypeHeaderValue("application/json")
-        }
+                    {
+                        ContentType = new MediaTypeHeaderValue("application/json")
+                    }
                 }
             };
-            using (var response = await _namedClient.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsByteArrayAsync();
-            }
+
+            using var response = await _namedClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsByteArrayAsync();
         }
     }
 }

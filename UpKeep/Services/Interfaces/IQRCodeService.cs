@@ -2,6 +2,6 @@
 {
     public interface IQRCodeService
     {
-        Task<byte[]> GenerateQRCodeForInventoryItem();
+        Task<byte[]> GenerateQRCodeForInventoryItem(string link);
     }
 }

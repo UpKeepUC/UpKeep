@@ -3,11 +3,11 @@ import Box from '@mui/material/Box';
 import DataTable from '../common/dataTable';
 
 const columns = [
-    { field: 'inventoryItemId', headerName: 'Id', width: 150 },
-    { field: 'inventoryItemTypeModel', headerName: 'Item Type', width: 150, valueFormatter: ({ value }) => value.name },
-    { field: 'inventoryItemCost', headerName: 'Item Cost', width: 150 },
-    { field: 'purchaseDate', headerName: 'Purchase Date', width: 150 },
-    { field: 'roomModel', headerName: 'Room', width: 250, valueFormatter: ({ value }) => value.roomLocation + ' - ' + value.roomTypeModel.name + ' - ' + value.roomNumber },
+    { field: 'inventoryItemId', headerName: 'Id', flex: 1 },
+    { field: 'inventoryItemTypeModel', headerName: 'Item Type', flex: 1, valueFormatter: ({ value }) => value.name },
+    { field: 'inventoryItemCost', headerName: 'Item Cost', flex: 1 },
+    { field: 'purchaseDate', headerName: 'Purchase Date', flex: 1 },
+    { field: 'roomModel', headerName: 'Room', flex: 1, valueFormatter: ({ value }) => value.roomLocation + ' - ' + value.roomTypeModel.name + ' - ' + value.roomNumber },
 ];
 
 const inventoryItemTableStyles = {

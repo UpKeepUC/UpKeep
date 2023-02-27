@@ -17,10 +17,10 @@ namespace UpKeep.Controllers
         }
 
 
-        [HttpPost, ActionName("GenerateQRCodeForInventoryId")]
-        public async Task<IActionResult> GenerateQRCodeForInventoryItem(int id)
+        [HttpPost, ActionName("GenerateQRCodeForInventoryItem")]
+        public async Task<IActionResult> GenerateQRCodeForInventoryItem(string link)
         {          
-            return Ok( File(await _qrCodeService.GenerateQRCodeForInventoryItem(), "image/png"));
+            return Ok( File(await _qrCodeService.GenerateQRCodeForInventoryItem(link), "image/png"));
         }
     }
 

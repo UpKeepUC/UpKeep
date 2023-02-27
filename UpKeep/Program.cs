@@ -24,7 +24,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<MappingProfile>();
 });
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
-builder.Services.AddHttpClient("qrCodeClient", c => c.BaseAddress = new Uri(builder.Configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"]));
+builder.Services.AddHttpClient("qrCodeClient", c => c.BaseAddress = new Uri($"https://rapidapi.com"));
 builder.Services.AddTransient<IInventoryItemService, InventoryItemService>();
 builder.Services.AddTransient<IInventoryItemTypeService, InventoryItemTypeService>();
 builder.Services.AddTransient<IMaintenanceTaskService, MaintenanceTaskService>();
