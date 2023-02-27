@@ -216,6 +216,7 @@ CREATE TABLE [dbo].[Room](
 	[RoomId] [int] IDENTITY(1,1) NOT NULL,
 	[RoomLocation] [varchar](200) NULL,
 	[RoomTypeId] [int] NOT NULL,
+	[RoomNumber] [nvarchar(50)] NOT NULL,
  CONSTRAINT [PK__Room__32863939ABADE757] PRIMARY KEY CLUSTERED 
 (
 	[RoomId] ASC
