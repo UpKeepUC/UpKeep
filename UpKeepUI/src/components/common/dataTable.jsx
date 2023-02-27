@@ -4,7 +4,7 @@ import { DataGrid } from '@mui/x-data-grid'
 const DataTable = ({
     rows, 
     columns, 
-    //loading,
+    loading,
     sx,
     getRowId
 }) => {
@@ -13,7 +13,7 @@ const DataTable = ({
             <DataGrid
             rows={rows}
             columns={columns}
-             //loading={loading}
+            loading={loading}
             sx={sx}
             getRowId={getRowId}
             />
