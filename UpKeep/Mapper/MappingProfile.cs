@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using UpKeep.Models;
+using UpKeepData.Data.UpKeepIdentityContext;
 using UpKeepData.Entity;
+using User = UpKeepData.Data.UpKeepIdentityContext.User;
 
 namespace UpKeep.Mapper
 {
@@ -22,6 +24,10 @@ namespace UpKeep.Mapper
             CreateMap<MaintenanceTaskTypeModel, MaintenanceTaskType>()
                 .ReverseMap();
             CreateMap<RoomTypeModel, RoomType>()
+                .ReverseMap();
+            CreateMap<UserRegistrationModel, User>()
+                .ReverseMap();
+            CreateMap<UserLoginModel, User>()
                 .ReverseMap();
         }
     }

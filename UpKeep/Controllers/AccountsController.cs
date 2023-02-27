@@ -20,7 +20,7 @@ namespace UpKeep.Controllers
         public AccountsController(IMapper mapper, UserManager<User> userManager, IConfiguration configuration) 
         { 
             _mapper = mapper; _userManager = userManager; 
-            _jwtSettings = configuration.GetSection("JwtSettings"); 
+            _jwtSettings = configuration.GetSection("JWTSettings"); 
         }
 
         [HttpPost("Register")] 
@@ -45,7 +45,8 @@ namespace UpKeep.Controllers
                 var signingCredentials = GetSigningCredentials(); 
                 var claims = GetClaims(user); 
                 var tokenOptions = GenerateTokenOptions(signingCredentials, await claims); 
-                var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions); return Ok(token);
+                var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions); 
+                return Ok(token);
             }
             return Unauthorized("Invalid Authentication");
         }
@@ -58,13 +59,23 @@ namespace UpKeep.Controllers
         }
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims) 
         { 
-            var tokenOptions = new JwtSecurityToken(issuer: _jwtSettings.GetSection("validIssuer").Value, audience: _jwtSettings.GetSection("validAudience").Value, claims: claims, expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.GetSection("expiryInMinutes").Value)), signingCredentials: signingCredentials); 
+            var tokenOptions = new JwtSecurityToken(
+                issuer: _jwtSettings.GetSection("validIssuer").Value, 
+                audience: _jwtSettings.GetSection("validAudience").Value, 
+                claims: claims, 
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.GetSection("expiryInMinutes").Value)), 
+                signingCredentials: signingCredentials); 
             return tokenOptions; 
         }
         private async Task<List<Claim>> GetClaims(User user) 
         { 
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Email) }; 
-            var roles = await _userManager.GetRolesAsync(user); foreach (var role in roles) 
+            var claims = new List<Claim> 
+            { 
+                new Claim(ClaimTypes.Name, user.Email) 
+            }; 
+
+            var roles = await _userManager.GetRolesAsync(user); 
+            foreach (var role in roles) 
             { 
                 claims.Add(new Claim(ClaimTypes.Role, role)); 
             } 
