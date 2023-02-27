@@ -7,7 +7,8 @@ import InventoryTable from '../../components/InventoryTable/InventoryTable';
 import Header from "../../components/common/header";
 
 const Inventory = () => {
-n
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
     const [open, setOpen] = useState(false);
 
