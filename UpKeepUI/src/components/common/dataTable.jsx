@@ -6,6 +6,7 @@ const DataTable = ({
     columns, 
     //loading,
     sx,
+    getRowId
 }) => {
 
         return (
@@ -14,6 +15,7 @@ const DataTable = ({
             columns={columns}
              //loading={loading}
             sx={sx}
+            getRowId={getRowId}
             />
         );
     };

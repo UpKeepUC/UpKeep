@@ -12,6 +12,7 @@ namespace UpKeepData.Data
         {
             return await InventoryItems
                 .Include(x => x.InventoryItemType)
+                .Include(x => x.Room)
                 .AsNoTracking()
                 .ToListAsync();
         }
