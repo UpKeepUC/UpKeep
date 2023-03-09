@@ -93,8 +93,8 @@ app.UseHttpsRedirection();
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .AllowCredentials()
-    .SetIsOriginAllowed(origin => true));// Allow any origin 
+    .AllowAnyOrigin());
+    //.SetIsOriginAllowed(origin => true));// Allow any origin 
 
 app.UseStaticFiles();
 app.UseRouting();
