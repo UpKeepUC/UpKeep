@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import DataTable from '../common/dataTable';
 
 const columns = [
-    { field: 'inventoryItemId', headerName: 'Id', flex: 1 },
+    { field: 'inventoryItemId', headerName: 'Id', width: 100},
     { field: 'inventoryItemTypeModel', headerName: 'Item Type', flex: 1, valueFormatter: ({ value }) => value.name },
     { field: 'inventoryItemCost', headerName: 'Item Cost', flex: 1 },
     { field: 'purchaseDate', headerName: 'Purchase Date', flex: 1 },

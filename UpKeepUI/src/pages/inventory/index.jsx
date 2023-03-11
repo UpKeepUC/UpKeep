@@ -21,6 +21,7 @@ const Inventory = () => {
   return (
     <Box m="20px">
       <Header title="INVENTORY" subtitle="Manage your Inventory!" />
+      
       <Box
         m="40px 0 0 0"
         height="75vh"
