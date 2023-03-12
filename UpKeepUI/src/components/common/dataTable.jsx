@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 
 const DataTable = ({
     rows, 
@@ -13,6 +13,7 @@ const DataTable = ({
             <DataGrid
             rows={rows}
             columns={columns}
+            components={{ Toolbar: GridToolbar }}
             loading={loading}
             sx={sx}
             getRowId={getRowId}
