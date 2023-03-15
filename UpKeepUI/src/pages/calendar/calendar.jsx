@@ -13,7 +13,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import Header from "../../components/common/header";
+import Header from "../../components/common/Header";
 import { tokens } from "../../theme";
 
 const Calendar = () => {
