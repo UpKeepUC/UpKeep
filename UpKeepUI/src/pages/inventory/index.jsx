@@ -23,7 +23,7 @@ const Inventory = () => {
 
   const addInventoryItem = () => {
     setOpen(true);
-    console.log('click')
+    console.log("click");
   };
 
   return (
