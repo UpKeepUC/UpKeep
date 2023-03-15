@@ -6,7 +6,7 @@ import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import CommonButton from "../../components/common/CommonButton/CommonButton";
 import InventoryTable from "../../components/InventoryTable/InventoryTable";
 import Header from "../../components/common/Header";
-import BasicModal from "../../components/common/BasicModal";
+import BasicModal from "../../components/common/BasicModal/BasicModal";
 
 const Inventory = () => {
   const theme = useTheme();
@@ -20,13 +20,19 @@ const Inventory = () => {
     }
     setOpen(false);
   };
+
+  const addInventoryItem = () => {
+    setOpen(true);
+    console.log('click')
+  };
+
   return (
     <Box m="20px">
       <Header title="INVENTORY" subtitle="Manage your Inventory!" />
       <Box>
         <CommonButton
           variant="contained"
-          //onClick={addInventoryItem}
+          onClick={addInventoryItem}
           size="large"
           //sx={cardHeaderStyles.addInventoryItemButton}
         >
@@ -73,6 +79,7 @@ const Inventory = () => {
           onClose={handleClose}
         />
       </Box>
+      <BasicModal open={open} onClose={() => setOpen(false)} />
     </Box>
   );
 };
