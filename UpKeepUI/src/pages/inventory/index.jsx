@@ -1,27 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import BasicSnackbar from '../../components/common/BasicSnackbar/BasicSnackbar';
-import InventoryTable from '../../components/InventoryTable/InventoryTable';
-import Header from "../../components/common/header";
+import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
+import CommonButton from "../../components/common/CommonButton/CommonButton";
+import InventoryTable from "../../components/InventoryTable/InventoryTable";
+import Header from "../../components/common/Header";
+import BasicModal from "../../components/common/BasicModal";
 
 const Inventory = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
       return;
     }
     setOpen(false);
-    };
+  };
   return (
     <Box m="20px">
       <Header title="INVENTORY" subtitle="Manage your Inventory!" />
-      
+      <Box>
+        <CommonButton
+          variant="contained"
+          //onClick={addInventoryItem}
+          size="large"
+          //sx={cardHeaderStyles.addInventoryItemButton}
+        >
+          Add Inventory Item
+        </CommonButton>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -54,12 +65,12 @@ const Inventory = () => {
           },
         }}
       >
-       <InventoryTable onError={() => setOpen(true)} />
-       <BasicSnackbar
-                open={open}
-                severity="error"
-                message="Data couldn't be fetched"
-                onClose={handleClose}
+        <InventoryTable onError={() => setOpen(true)} />
+        <BasicSnackbar
+          open={open}
+          severity="error"
+          message="Data couldn't be fetched"
+          onClose={handleClose}
         />
       </Box>
     </Box>
