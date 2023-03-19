@@ -32,23 +32,35 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const apiURL = process.env.REACT_APP_API_URL;
-    fetch(apiURL + '/Accounts/Login/Login', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(
-            { 
-                "email": data.get('email'), 
-                "password":data.get('password')
-            })
-    })
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json);
-            })
-            .catch(errorReason => {console.log(errorReason)})
+    fetchSignIn(data);
+
 
   };
+
+  async function fetchSignIn(data){
+    const apiURL = process.env.REACT_APP_API_URL;
+    const response = await fetch(apiURL + '/Accounts/Login/Login', {
+        method: 'POST',
+        body: JSON.stringify(
+            {
+                'email': data.get('email'), 
+                'password':data.get('password')
+            }),
+        headers: {
+            'content-type':'application/json'
+        }     
+    });
+
+    console.log(response);
+            // .then((response) => {
+            //     console.log(response);
+            //     console.log(response.body);
+            // })
+            // .then((json) => {
+            //     console.log(json);
+            // })
+            // .catch(errorReason => {console.log(errorReason)});
+  }
 
   return (
     <ThemeProvider theme={theme}>
