@@ -11,25 +11,27 @@ import BasicModal from "../../components/common/BasicModal/BasicModal";
 
 const Inventory = () => {
   const [open, setOpen] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
   const [inventoryItems, setInventoryItems] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
 
-  const addInventoryItem = () => {
+  const addInventoryItems = () => {
     setOpen(true);
     console.log("click");
   };
 
-  const addNewInventoryItem = (data) => {
+  const addNewInventoryItems = (data) => {
     inventoryItems.push({ ...data });
     setOpen(false);
+  };
+
+    const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackOpen(false);
   };
 
   return (
@@ -38,7 +40,7 @@ const Inventory = () => {
       <Box>
         <CommonButton
           variant="contained"
-          onClick={addInventoryItem}
+          onClick={addInventoryItems}
           size="large"
           //sx={cardHeaderStyles.addInventoryItemButton}
         >
@@ -77,9 +79,9 @@ const Inventory = () => {
           },
         }}
       >
-        <InventoryTable onError={() => setOpen(true)} />
+        <InventoryTable onError={() => setSnackOpen(true)} />
         <BasicSnackbar
-          open={open}
+          snackOpen={snackOpen}
           severity="error"
           message="Data couldn't be fetched"
           onClose={handleClose}
@@ -89,7 +91,7 @@ const Inventory = () => {
         <CreateInventoryItemModal
           open={open}
           onClose={() => setOpen(false)}
-          addNewInventoryItem={addNewInventoryItem}
+          addNewInventoryItems={addNewInventoryItems}
         />
       </Box>
     </Box>
