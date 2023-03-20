@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const initialValues = {
-  maintenanceTaskId: "",
+  maintenanceTaskId: "null",
   name: "",
   description: "",
   maintenanceTaskDueDate: ""
@@ -53,19 +53,35 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
         "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
       }}
     >
-      <TextField
+      {/* <TextField
         fullWidth
         variant="filled"
-        placeholder="Cost in $ USD"
+        placeholder="Maintenance Task ID"
         name="maintenanceTaskId"
         label="Maintenance Task ID"
-        type="number"
+        type
         {...register("maintenanceTaskId")}
         error={errors.maintenanceTaskId ? true : false}
         helperText={errors.maintenanceTaskId?.message}
         value={values.maintenanceTaskId}
         onChange={(event) =>
           handleChange({ ...values, maintenanceTaskId: event.target.value })
+        }
+        sx={{ gridColumn: "span 4" }}
+      /> */}
+       <TextField
+        fullWidth
+        variant="filled"
+        placeholder="Name of Task"
+        name="name"
+        label="Name"
+        type="string"
+        {...register("name")}
+        error={errors.name ? true : false}
+        helperText={errors.name?.message}
+        value={values.name}
+        onChange={(event) =>
+          handleChange({ ...values, name: event.target.value })
         }
         sx={{ gridColumn: "span 4" }}
       />
@@ -85,25 +101,9 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
         <TextField
         fullWidth
         variant="filled"
-        placeholder="Name of Task"
-        name="name"
-        label="Name"
-        type="string"
-        {...register("name")}
-        error={errors.name ? true : false}
-        helperText={errors.name?.message}
-        value={values.name}
-        onChange={(event) =>
-          handleChange({ ...values, name: event.target.value })
-        }
-        sx={{ gridColumn: "span 4" }}
-      />
-        <TextField
-        fullWidth
-        variant="filled"
         placeholder="Description of Task"
         name="description"
-        label="description"
+        label="Description"
         type="string"
         {...register("description")}
         error={errors.description ? true : false}
@@ -114,64 +114,15 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
         }
         sx={{ gridColumn: "span 4" }}
       />
-      {/* <TextField
-        fullWidth
-        variant="filled"
-        type="text"
-        label="Room Location"
-        helperText="Provide Room Floor"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.roomLocation}
-        name="roomLocation"
-        sx={{ gridColumn: "span 4" }}
-      />
-      <TextField
-        fullWidth
-        variant="filled"
-        type="text"
-        label="Room Type"
-        helperText="Provide Room Type"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.roomTypeModel.name}
-        name="name"
-        sx={{ gridColumn: "span 4" }}
-      />
-      <TextField
-        fullWidth
-        variant="filled"
-        type="number"
-        label="Room Number"
-        helperText="Provide Room Number"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.roomNumber}
-        name="roomNumber"
-        sx={{ gridColumn: "span 4" }}
-      />
-      <TextField
-        placeholder="Room number"
-        name="roomNumber"
-        label="Room number"
-        type
-        required
-        {...register("phoneNumber")}
-        error={errors.phoneNumber ? true : false}
-        helperText={errors.phoneNumber?.message}
-        value={values.phoneNumber}
-        onChange={(event) =>
-          handleChange({ ...values, phoneNumber: event.target.value })
-        }
-      /> */}
     </Box>
   );
+  
   return (
     <BasicModal
       open={open}
       onClose={onClose}
       title="New Maintenance Task"
-      subTitle="Fill out all the following feilds to create a new Inventory Item."
+      subTitle="Fill out all the following fields to create a new Maintenance Task."
       content={getContent()}
       onSubmit={handleSubmit(addMaintenanceTask)}
     />
