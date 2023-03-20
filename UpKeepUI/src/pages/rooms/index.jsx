@@ -1,6 +1,6 @@
 import { Box, Grid, Modal } from "@mui/material";
 import React, { useEffect, useState } from 'react';
-import Header from "../../components/common/header";
+import Header from "../../components/common/Header";
 import "../../index.css";
 import RoomModal from "../../components/RoomModal/RoomModal";
 
@@ -16,7 +16,7 @@ const Rooms = ({ onError }) => {
             .then((json) => {
                 setRooms(json)
             })
-            .catch(() => onError());
+            .catch(() => onError());        
   });
 
 

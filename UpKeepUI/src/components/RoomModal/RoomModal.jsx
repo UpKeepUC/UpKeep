@@ -3,9 +3,7 @@ import { Box, Grid, Modal, useTheme } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import { tokens } from "../../theme";
 import Button from '@mui/material/Button';
-import Header from "../../components/common/header";
-import InventoryTable from '../../components/InventoryTable/InventoryTable';
-import useMediaQuery from "@mui/material/useMediaQuery";
+import InventoryTable from '../InventoryTable/InventoryTableByRoom';
 
 function RoomModal(props) {
 
@@ -100,9 +98,9 @@ function RoomModal(props) {
             color: `${colors.greenAccent[200]} !important`,
           },
         }}>
-            <InventoryTable></InventoryTable>
+            
         </Box>
-        
+        <InventoryTable roomId={selectedObject.roomId}/>
         </div> 
     );
   }

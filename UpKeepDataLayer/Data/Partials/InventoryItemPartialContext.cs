@@ -41,6 +41,7 @@ namespace UpKeepData.Data
         {
             return await InventoryItems
                 .Where(x => x.RoomId == id)
+                .Include(x => x.InventoryItemType)
                 .AsNoTracking()
                 .ToListAsync();
         }
