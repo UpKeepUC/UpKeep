@@ -1,13 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import CommonButton from "../../components/common/CommonButton/CommonButton";
 import InventoryTable from "../../components/InventoryTable/InventoryTable";
 import Header from "../../components/common/Header";
 import CreateInventoryItemModal from "../../components/CreateInventoryItemModal/CreateInventoryItemModal";
-import BasicModal from "../../components/common/BasicModal/BasicModal";
 
 const Inventory = () => {
   const [open, setOpen] = useState(false);

@@ -79,7 +79,7 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
       <TextField
         fullWidth
         variant="filled"
-        placeholder="Cost in USD"
+        placeholder="Cost in $ USD"
         name="inventoryItemCost"
         label="$ Inventory Item Cost"
         type="number"
