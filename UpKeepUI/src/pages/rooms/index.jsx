@@ -1,23 +1,31 @@
 import { Box, Grid, Modal } from "@mui/material";
-import { useState } from "react";
+import React, { useEffect, useState } from 'react'
 import Header from "../../components/common/header";
 import InventoryTable from '../../components/InventoryTable/InventoryTable';
 import "../../index.css";
 
-const Rooms = () => {
-  const [selectedRoom, setSelectedRoom] = useState(null);
+const Rooms = ({ onError }) => {
+  const [rooms, setRooms] = useState([]);
+  const apiURL = process.env.REACT_APP_API_URL;
+   useEffect(() => {
+        fetch(apiURL + '/Room/GetRooms')
+            .then((response) => response.json())
+            .then((json) => {
+                setRooms(json);
+                console.log(json);
+            })
+            .catch(() => onError())
+        }, []);
 
   const handleRoomClick = (room) => {
-    setSelectedRoom(room);
+    console.log(room);
+    // setSelectedRoom(room);
   };
 
   const handleClose = () => {
-    setSelectedRoom(null);
+    // setSelectedRoom(null);
   };
 
-  const rooms100to140 = Array.from(Array(41), (_, i) => i + 100);
-  const rooms200to240 = Array.from(Array(41), (_, i) => i + 200);
-  const rooms300to340 = Array.from(Array(41), (_, i) => i + 300);
 
   return (
     <Box m="20px">
@@ -33,17 +41,17 @@ const Rooms = () => {
           <Grid item xs={12} md={6}>
             <Box display="flex" justifyContent="center">
               <Box className="floor-plan">
-                {rooms100to140.map((room) => (
+                {rooms.map((room) => (
                   <div
-                    key={room}
-                    className={`room room-${room}`}
+                    key={room.roomId}
+                    className={`room room-${room.roomNumber}`}
                     onClick={() => handleRoomClick(`Room ${room}`)}
                   >
-                    <div className="room-number">{room}</div>
+                    <div className="room-number">{room.roomNumber}</div>
                   </div>
                 ))}
               </Box>
-              <Box className="floor-plan">
+              {/* <Box className="floor-plan">
                 {rooms200to240.map((room) => (
                   <div
                     key={room}
@@ -63,12 +71,12 @@ const Rooms = () => {
                     <div className="room-number">{room}</div>
                   </div>
                 ))}
-              </Box>
+              </Box> */}
             </Box>
           </Grid>
         </Grid>
       </Box>
-      <Modal open={selectedRoom !== null} onClose={handleClose}>
+      {/* <Modal open={rooms !== null} onClose={handleClose}>
         <Box
           sx={{
             position: "absolute",
@@ -81,10 +89,10 @@ const Rooms = () => {
             p: 4,
           }}
         >
-          <h2>{selectedRoom}</h2>
+          <h2>{room.roomNumber}</h2>
           <p><InventoryTable></InventoryTable></p>
         </Box>
-      </Modal>
+      </Modal> */}
     </Box>
   );
 };
