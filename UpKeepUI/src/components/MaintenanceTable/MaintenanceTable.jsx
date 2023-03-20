@@ -14,6 +14,7 @@ const location = 'First floor: Room 101';
 
 const columns = [
     { field: 'maintenanceTaskId', headerName: 'Id', flex: 1 },
+    { field: 'location', headerName: 'Location', flex: 1, valueGetter: () => 'Lobby' },
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'description', headerName: 'Description', flex: 1 },
     { field: 'maintenanceTaskDueDate', headerName: 'Task Due Date', flex: 1 }
