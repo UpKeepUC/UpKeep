@@ -1,26 +1,50 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import BasicSnackbar from '../../components/common/BasicSnackbar/BasicSnackbar';
-import InventoryTable from '../../components/InventoryTable/InventoryTable';
-import Header from "../../components/common/header";
+import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
+import CommonButton from "../../components/common/CommonButton/CommonButton";
+import InventoryTable from "../../components/InventoryTable/InventoryTable";
+import Header from "../../components/common/Header";
+import CreateInventoryItemModal from "../../components/CreateInventoryItemModal/CreateInventoryItemModal";
 
 const Inventory = () => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+  const [open, setOpen] = useState(false);
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [inventoryItems, setInventoryItems] = useState([]);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
-    const [open, setOpen] = useState(false);
+
+  const addInventoryItems = () => {
+    setOpen(true);
+    console.log("click");
+  };
+
+  const addNewInventoryItems = (data) => {
+    inventoryItems.push({ ...data });
+    setOpen(false);
+  };
 
     const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpen(false);
-    };
+    setSnackOpen(false);
+  };
+
   return (
     <Box m="20px">
       <Header title="INVENTORY" subtitle="Manage your Inventory!" />
+      <Box>
+        <CommonButton
+          variant="contained"
+          onClick={addInventoryItems}
+          size="large"
+          //sx={cardHeaderStyles.addInventoryItemButton}
+        >
+          Add Inventory Item
+        </CommonButton>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -48,14 +72,24 @@ const Inventory = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
-       <InventoryTable onError={() => setOpen(true)} />
-       <BasicSnackbar
-                open={open}
-                severity="error"
-                message="Data couldn't be fetched"
-                onClose={handleClose}
+        <InventoryTable onError={() => setSnackOpen(true)} />
+        <BasicSnackbar
+          snackOpen={snackOpen}
+          severity="error"
+          message="Data couldn't be fetched"
+          onClose={handleClose}
+          />
+      </Box>
+      <Box>
+        <CreateInventoryItemModal
+          open={open}
+          onClose={() => setOpen(false)}
+          addNewInventoryItems={addNewInventoryItems}
         />
       </Box>
     </Box>
