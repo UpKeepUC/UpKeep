@@ -14,16 +14,15 @@ const MaintenanceTasksTableStyles = {
 
 function MaintenanceTable(props) {
 
-const { roomId } = props;    
+const { inventoryId } = props;    
 const [maintenanceTasks, setMaintenanceTasks] = useState([]);
 const apiURL = process.env.REACT_APP_API_URL;
    useEffect(() => {
-        const id = window.location.pathname.split('/');
-        console.log(id);
-        fetch(apiURL + '/MaintenanceTask/GetMaintenanceTaskByRoomId?id='+id)
+    const id = window.location.pathname.split('/')[2];
+        console.log(inventoryId);
+        fetch(apiURL + '/MaintenanceTask/GetMaintenanceTaskByInventoryId?id='+id)
             .then((response) => response.json())
             .then((json) => {
-                console.log(json);
                 setMaintenanceTasks(json);
             })
             .catch(() => {console.log("error");})

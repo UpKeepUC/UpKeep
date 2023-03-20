@@ -10,17 +10,19 @@ import DataTable from '../common/dataTable';
 //                 MaintenanceTaskDueDate: new Date(dueDate),
 //                 MaintenanceTaskCompletedDate,
 
+const location = 'First floor: Room 101';
 
 const columns = [
     { field: 'maintenanceTaskId', headerName: 'Id', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'description', headerName: 'Description', flex: 1 },
-    { field: 'maintenanceTaskDueDate', headerName: 'Task Due Date', flex: 1 },
+    { field: 'maintenanceTaskDueDate', headerName: 'Task Due Date', flex: 1 }
 ];
 
 const MaintenanceTasksTableStyles = {
     height: '650px',
 };
+
 
 const MaintenanceTable = ({ onError }) => {
 const [maintenanceTasks, setMaintenanceTasks] = useState([]);
