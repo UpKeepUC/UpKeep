@@ -1,3 +1,5 @@
+import { Box } from "@mui/material";
+import Header from "../../components/common/Header";
 import { Box, Grid, Modal } from "@mui/material";
 import React, { useEffect, useState } from 'react'
 import Header from "../../components/common/header";
