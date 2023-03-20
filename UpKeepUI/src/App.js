@@ -11,6 +11,8 @@ import Rooms from "./pages/rooms";
 import Admin from "./pages/admin";
 import UserForm from "./pages/userForm";
 import FAQ from "./pages/faq";
+import SignIn from "./pages/login";
+import SignUp from "./pages/register";
 
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
-        <div className="app">
+        <div className="app" >
           <Sidebar />
           <main className="content">
             <Topbar />
@@ -33,6 +35,8 @@ function App() {
               <Route path ="/admin" element={<Admin />}/>
               <Route path ="/userForm" element={<UserForm />}/>
               <Route path ="/faq" element={<FAQ />}/>
+              <Route path="/login" element={<SignIn/>} />
+              <Route path="/register" element={<SignUp/>} />
             </Routes>
           </main>
         </div>

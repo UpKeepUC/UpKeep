@@ -17,9 +17,9 @@ const inventoryItemTableStyles = {
 
 const InventoryTable = ({ onError }) => {
 const [inventoryItems, setInventoryItems] = useState([]);
-
+const apiURL = process.env.REACT_APP_API_URL;
    useEffect(() => {
-        fetch('https://localhost:7285/api/InventoryItem/GetInventoryItems')
+        fetch(apiURL + '/InventoryItem/GetInventoryItems')
             .then((response) => response.json())
             .then((json) => {
                 setInventoryItems(json);

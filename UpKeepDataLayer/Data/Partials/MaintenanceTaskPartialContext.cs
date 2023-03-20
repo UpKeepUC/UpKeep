@@ -28,6 +28,16 @@ namespace UpKeepData.Data
                 .SingleAsync();
         }
 
+        public async Task<IEnumerable<MaintenanceTask>> GetMaintenanceTaskByRoomId(int id)
+        {
+            return await maintenanceTasks
+                .Join(InventoryItemMaintenanceTasks, mt => mt.MaintenanceTaskId, itmt => itmt.MaintenanceTaskId, (mt, itmt) => new { mt, itmt })
+                .Join(InventoryItems, x => x.itmt.InventoryItemId, i => i.InventoryItemId, (x, i) => new { x.mt, i })
+                .Where(x => x.i.RoomId == id)
+                .Select(x => x.mt)
+                .ToListAsync();
+        }
+
         public async Task<int> UpdateMaintenanceTask(MaintenanceTask maintenanceTask)
         {
             var entry = Entry(maintenanceTask);

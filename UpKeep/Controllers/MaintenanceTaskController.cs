@@ -31,6 +31,13 @@ namespace UpKeep.Controllers
             return Ok(await _maintenanceTaskService.GetMaintenanceTaskById(id));
         }
 
+        [HttpGet, ActionName("GetMaintenanceTaskByRoomId")]
+        [ProducesResponseType(typeof(ICollection<MaintenanceTaskModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetMaintenanceTaskByRoomId(int id)
+        {
+            return Ok(await _maintenanceTaskService.GetMaintenanceTaskByRoomId(id));
+        }
+
         [HttpPost, ActionName("UpdateMaintenanceTask")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateMaintenanceTask(MaintenanceTaskModel MaintenanceTaskModel)

@@ -31,6 +31,13 @@ namespace UpKeep.Services
             return model;
         }
 
+        public async Task<ICollection<InventoryItemModel>> GetInventoryItemModelByRoomId(int id)
+        {
+            var result = await upKeepDBContext.GetInventoryItemByRoomId(id);
+            var model = mapper.Map<ICollection<InventoryItemModel>>(result);
+            return model;
+        }
+
         public async Task<int> UpdateInventoryItem(InventoryItemModel inventoryItemModel)
         {
             var model = mapper.Map<InventoryItem>(inventoryItemModel);

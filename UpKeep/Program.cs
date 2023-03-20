@@ -12,6 +12,8 @@ using UpKeep.Services.Interfaces;
 using UpKeepData.Data;
 using UpKeepData.Data.UpKeepIdentityContext;
 using UpKeepData.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,9 @@ builder.Services.AddTransient<IMaintenanceTaskTypeService, MaintenanceTaskTypeSe
 builder.Services.AddTransient<IRoomTypeService, RoomTypeService>();
 builder.Services.AddTransient<IRoomService, RoomService>();
 builder.Services.AddTransient<IQRCodeService, QRCodeService>();
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<UpKeepIdentityContext>(); 
@@ -42,24 +47,25 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false; 
     options.Password.RequireUppercase = false; 
 });
-var jwtSettings = builder.Configuration.GetSection("JwtSettings"); 
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(opt =>
-{ 
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; 
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
-}).AddJwtBearer(options => 
-{ 
-    options.TokenValidationParameters = new TokenValidationParameters 
-    { 
-        ValidateIssuer = false, 
-        ValidateAudience = false, 
-        ValidateLifetime = true, 
-        ValidateIssuerSigningKey = true, 
-        ValidIssuer = jwtSettings.GetSection("validIssuer").Value, 
-        ValidAudience = jwtSettings.GetSection("validAudience").Value, 
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value)) 
-    }; 
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+        ValidAudience = jwtSettings.GetSection("validAudience").Value,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+    };
 });
+//.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd")); ;
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
@@ -87,8 +93,8 @@ app.UseHttpsRedirection();
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .AllowCredentials()
-    .SetIsOriginAllowed(origin => true));// Allow any origin 
+    .AllowAnyOrigin());
+    //.SetIsOriginAllowed(origin => true));// Allow any origin 
 
 app.UseStaticFiles();
 app.UseRouting();
