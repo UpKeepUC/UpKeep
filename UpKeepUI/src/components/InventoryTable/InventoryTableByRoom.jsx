@@ -8,7 +8,7 @@ const columns = [
     { field: 'inventoryItemTypeModel', headerName: 'Item Type', flex: 1, valueFormatter: ({ value }) => value.name },
     { field: 'inventoryItemCost', headerName: 'Item Cost', flex: 1 },
     { field: 'purchaseDate', headerName: 'Purchase Date', type:'date', flex: 1 },
-    { field: 'roomModel', headerName: 'Room', flex: 1, valueFormatter: ({ value }) => value.roomLocation + ' - ' + value.roomTypeModel.name + ' - ' + value.roomNumber },
+    { field: 'roomModel', headerName: 'Room', flex: 1, valueFormatter: ({ value }) => value.roomLocation + ' - ' + value.roomNumber },
 ];
 
 const inventoryItemTableStyles = {
@@ -25,8 +25,6 @@ const apiURL = process.env.REACT_APP_API_URL;
         fetch(apiURL + '/InventoryItem/GetInventoryItemByRoomId?id='+roomId)
             .then((response) => response.json())
             .then((json) => {
-                console.log(json);
-                console.log(roomId);
                 setInventoryItems(json);
             })
             .catch(() => {console.log("error");})

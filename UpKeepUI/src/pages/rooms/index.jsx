@@ -26,7 +26,7 @@ const Rooms = ({ onError }) => {
 
   return (
     <Box m="20px">
-      {selectedRoom && <RoomModal selectedObject={selectedRoom} onClose={() => setRoom(null)}/>}
+      
       <Box
         display="flex"
         justifyContent="space-between"
@@ -54,7 +54,8 @@ const Rooms = ({ onError }) => {
             </Box>
           </Grid>
         </Grid>        
-      </Box>          
+      </Box>
+      {selectedRoom && <RoomModal selectedObject={selectedRoom} onClose={() => setRoom(null)}/>}
     </Box>
   );
 };

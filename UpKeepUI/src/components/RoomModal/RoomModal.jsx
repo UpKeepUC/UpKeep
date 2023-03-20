@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import { tokens } from "../../theme";
 import Button from '@mui/material/Button';
 import InventoryTable from '../InventoryTable/InventoryTableByRoom';
+import MaintenanceTable from '../MaintenanceTable/MaintenanceTableByRoom';
 
 function RoomModal(props) {
 
@@ -98,9 +99,16 @@ function RoomModal(props) {
             color: `${colors.greenAccent[200]} !important`,
           },
         }}>
-            
+          <Box>
+          <h2>Inventory Items in Room</h2>
+          <InventoryTable roomId={selectedObject.roomId}/>
+          </Box>
+          <Box>
+          <h2>Maintenance Tasks for Room</h2>
+          <MaintenanceTable roomId={selectedObject.roomId}/>  
+          </Box>
         </Box>
-        <InventoryTable roomId={selectedObject.roomId}/>
+        
         </div> 
     );
   }
