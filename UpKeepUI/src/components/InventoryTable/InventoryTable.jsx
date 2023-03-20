@@ -34,7 +34,8 @@ return (
             components={{ Toolbar: GridToolbar }}
             loading={!inventoryItems.length}
             sx={inventoryItemTableStyles}
-            getRowId={(row) => row.inventoryItemId}/>
+            getRowId={(row) => row.inventoryItemId}
+            />
     );
 };
         

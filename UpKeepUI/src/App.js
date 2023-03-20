@@ -13,6 +13,7 @@ import UserForm from "./pages/userForm";
 import FAQ from "./pages/faq";
 import SignIn from "./pages/login";
 import SignUp from "./pages/register";
+import InventoryView from "./pages/inventory/view";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
               <Route path ="/faq" element={<FAQ />}/>
               <Route path="/login" element={<SignIn/>} />
               <Route path="/register" element={<SignUp/>} />
+              <Route path="/inventory/:id" element={<InventoryView/>}/>
             </Routes>
           </main>
         </div>

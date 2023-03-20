@@ -38,6 +38,13 @@ namespace UpKeep.Services
             return model;
         }
 
+        public async Task<IEnumerable<MaintenanceTaskModel>> GetMaintenanceTaskByInventoryId(int id)
+        {
+            var result = await upKeepDBContext.GetMaintenanceTaskByInventoryId(id);
+            var model = mapper.Map<ICollection<MaintenanceTaskModel>>(result);
+            return model;
+        }
+
         public async Task<int> UpdateMaintenanceTask(MaintenanceTaskModel maintenanceTaskModel)
         {
             var model = mapper.Map<MaintenanceTask>(maintenanceTaskModel);

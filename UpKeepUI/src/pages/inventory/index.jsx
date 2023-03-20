@@ -8,6 +8,9 @@ import Header from "../../components/common/Header";
 import CreateInventoryItemModal from "../../components/CreateInventoryItemModal/CreateInventoryItemModal";
 
 const Inventory = () => {
+
+
+  
   const [open, setOpen] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
   const [inventoryItems, setInventoryItems] = useState([]);
@@ -31,6 +34,8 @@ const Inventory = () => {
     }
     setSnackOpen(false);
   };
+
+
 
   return (
     <Box m="20px">
