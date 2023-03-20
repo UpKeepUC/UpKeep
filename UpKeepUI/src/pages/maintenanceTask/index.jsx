@@ -40,7 +40,7 @@ const MaintenanceTask = () => {
           size="large"
           //sx={cardHeaderStyles.addInventoryItemButton}
         >
-          Add Inventory Item
+          Add Maintenance Task
         </CommonButton>
       </Box>
       <Box
