@@ -25,13 +25,11 @@ const MaintenanceTasksTableStyles = {
 const MaintenanceTable = ({ onError }) => {
 const [maintenanceTasks, setMaintenanceTasks] = useState([]);
 const apiURL = process.env.REACT_APP_API_URL;
-console.log("attempting");
    useEffect(() => {
         fetch(apiURL + '/MaintenanceTask/GetMaintenanceTasks')
             .then((response) => response.json())
             .then((json) => {
                 setMaintenanceTasks(json);
-                console.log(json);
             })
             .catch(() => onError())
         }, []);    

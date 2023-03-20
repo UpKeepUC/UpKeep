@@ -22,7 +22,6 @@ const apiURL = process.env.REACT_APP_API_URL;
             .then((response) => response.json())
             .then((json) => {
                 setInventoryItems(json);
-                console.log(json);
             })
             .catch(() => onError())
         }, []);    
