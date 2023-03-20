@@ -8,6 +8,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 const initialValues = {
   maintenanceTaskId: "null",
+  location: "",
   name: "",
   description: "",
   maintenanceTaskDueDate: ""
@@ -19,6 +20,7 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
 
   const MaintenanceTaskSchema = Yup.object().shape({
     maintenanceTaskId: Yup.object().required("required"),
+    location: Yup.string().required("required"),
     name: Yup.string().required("required"),
     description: Yup.object().required("required"),
     maintenanceTaskDueDate: Yup.date().required("required"),
@@ -86,6 +88,22 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
         sx={{ gridColumn: "span 4" }}
       />
       <TextField
+        fullWidth
+        variant="filled"
+        placeholder="Maintenance Task Location"
+        name="location"
+        label="Maintenance Task Loction"
+        type
+        {...register("location")}
+        error={errors.location ? true : false}
+        helperText={errors.location?.message}
+        value={values.location}
+        onChange={(event) =>
+          handleChange({ ...values, location: event.target.value })
+        }
+        sx={{ gridColumn: "span 4" }}
+      />
+      <TextField
         name="maintenanceTaskDueDate"
         type="date"
         required
@@ -116,7 +134,7 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
       />
     </Box>
   );
-  
+
   return (
     <BasicModal
       open={open}
