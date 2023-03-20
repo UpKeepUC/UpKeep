@@ -5,6 +5,7 @@ import { tokens } from "../../theme";
 import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import MaintenanceTable from "../../components/MaintenanceTable/MaintenanceTable";
 import CommonButton from "../../components/common/CommonButton/CommonButton";
+import CreateMaintenanceTaskModal from "../../components/CreateMaintenanceTaskModal/CreateMaintenanceTaskModal";
 
 const MaintenanceTask = () => {
   const [open, setOpen] = useState(false);
@@ -13,12 +14,12 @@ const MaintenanceTask = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const addMaintenanceTasks = () => {
+  const addMaintenanceTask = () => {
     setOpen(true);
     console.log("click");
   };
 
-  const addNewMaintenanceTasks = (data) => {
+  const addNewMaintenanceTask = (data) => {
     maintenanceTasks.push({ ...data });
     setOpen(false);
   };
@@ -36,7 +37,7 @@ const MaintenanceTask = () => {
       <Box>
         <CommonButton
           variant="contained"
-          onClick={addMaintenanceTasks}
+          onClick={addMaintenanceTask}
           size="large"
           //sx={cardHeaderStyles.addInventoryItemButton}
         >
@@ -81,6 +82,13 @@ const MaintenanceTask = () => {
           severity="error"
           message="Data couldn't be fetched"
           onClose={handleClose}
+        />
+      </Box>
+      <Box>
+      <CreateMaintenanceTaskModal
+          open={open}
+          onClose={() => setOpen(false)}
+          addNewMaintenanceTask={addNewMaintenanceTask}
         />
       </Box>
     </Box>
