@@ -6,8 +6,6 @@ import { modalStyles } from './styles';
 
 
 const BasicModal = ({ open, onClose, title, subTitle, content, onSubmit }) => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
 
     return (
         <Modal open={open} onClose={onClose} >
@@ -16,12 +14,12 @@ const BasicModal = ({ open, onClose, title, subTitle, content, onSubmit }) => {
                     variant="h6"
                     component="h2"
                 >
-                    Text in Modal
+                    {title}
                 </Typography>
                 <Typography sx={{ mt: 2 }}>
                     {subTitle}
                 </Typography>
-                Here is random text 
+                    {content} 
                 <Box sx={modalStyles.buttons} >
                     <CommonButton
                         variant="contained"

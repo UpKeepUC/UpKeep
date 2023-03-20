@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
@@ -6,13 +6,14 @@ import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import CommonButton from "../../components/common/CommonButton/CommonButton";
 import InventoryTable from "../../components/InventoryTable/InventoryTable";
 import Header from "../../components/common/Header";
+import CreateInventoryItemModal from "../../components/CreateInventoryItemModal/CreateInventoryItemModal";
 import BasicModal from "../../components/common/BasicModal/BasicModal";
 
 const Inventory = () => {
+  const [open, setOpen] = useState(false);
+  const [inventoryItems, setInventoryItems] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const [open, setOpen] = useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -24,6 +25,11 @@ const Inventory = () => {
   const addInventoryItem = () => {
     setOpen(true);
     console.log("click");
+  };
+
+  const addNewInventoryItem = (data) => {
+    inventoryItems.push({ ...data });
+    setOpen(false);
   };
 
   return (
@@ -77,9 +83,15 @@ const Inventory = () => {
           severity="error"
           message="Data couldn't be fetched"
           onClose={handleClose}
+          />
+      </Box>
+      <Box>
+        <CreateInventoryItemModal
+          open={open}
+          onClose={() => setOpen(false)}
+          addNewInventoryItem={addNewInventoryItem}
         />
       </Box>
-      <BasicModal open={open} onClose={() => setOpen(false)} />
     </Box>
   );
 };
