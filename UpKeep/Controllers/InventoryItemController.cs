@@ -31,6 +31,13 @@ namespace UpKeep.Controllers
             return Ok(await _inventoryItemService.GetInventoryItemModelById(id));
         }
 
+        [HttpGet, ActionName("GetInventoryItemByRoomId")]
+        [ProducesResponseType(typeof(ICollection<InventoryItemModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetInventoryItemByRoomId(int id)
+        {
+            return Ok(await _inventoryItemService.GetInventoryItemModelByRoomId(id));
+        }
+
         [HttpPost, ActionName("UpdateInventoryItem")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateInventoryItem(InventoryItemModel inventoryItemModel)

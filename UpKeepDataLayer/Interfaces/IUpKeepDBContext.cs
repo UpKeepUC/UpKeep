@@ -12,6 +12,7 @@ namespace UpKeepData.Interfaces
         #region Inventory Items
         Task<ICollection<InventoryItem>> GetInventoryItems();
         Task<InventoryItem> GetInventoryItemById(int id);
+        Task<ICollection<InventoryItem>> GetInventoryItemByRoomId(int id);
         Task<int> UpdateInventoryItem(InventoryItem inventoryItem);
         Task<int> AddInventoryItem(InventoryItem inventoryItem);
         Task<int> DeleteInventoryItem(InventoryItem inventoryItem);

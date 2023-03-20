@@ -37,6 +37,14 @@ namespace UpKeepData.Data
                 .SingleAsync();
         }
 
+        public async Task<ICollection<InventoryItem>> GetInventoryItemByRoomId(int id)
+        {
+            return await InventoryItems
+                .Where(x => x.RoomId == id)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<int> UpdateInventoryItem(InventoryItem inventoryItem)
         {
             var entry = Entry(inventoryItem);
