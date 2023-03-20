@@ -27,6 +27,7 @@ namespace UpKeepData.Interfaces
 
         #region Maintenance Task
         Task<IEnumerable<MaintenanceTask>> GetMaintenanceTasks();
+        Task<IEnumerable<MaintenanceTask>> GetMaintenanceTaskByRoomId(int id);
         Task<MaintenanceTask> GetMaintenanceTaskById(int id);
         Task<int> UpdateMaintenanceTask(MaintenanceTask maintenanceTask);
         Task<int> AddMaintenanceTask(MaintenanceTask maintenanceTask);
