@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Box, TextField, MenuItem, InputAdornment } from "@mui/material";
+import {
+  Box,
+  TextField,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import BasicModal from "../common/BasicModal/BasicModal";
 import { useForm } from "react-hook-form";
+import Select from "@mui/material/Select";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -19,6 +26,8 @@ const initialValues = {
 
 const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
   const [values, setValues] = useState(initialValues);
+  const [inventoryItemTypes, setInventoryItemTypes] = useState([]);
+  const [roomModel, setRoomModel] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const InventoryItemSchema = Yup.object().shape({
@@ -47,9 +56,36 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
   const handleChange = (value) => {
     setValues(value);
   };
+  const handleInventoryItemChange = (event) => {
+    setInventoryItemTypes(event.target.value);
+  };
 
+  const apiURL = process.env.REACT_APP_API_URL;
   useEffect(() => {
     if (open) setValues(initialValues);
+    //method one sset inventory types
+    fetch(apiURL + "/InventoryItemType/GetInventoryItemTypes")
+      .then((response) => response.json())
+      .then((json) => {
+        setInventoryItemTypes(json);
+        console.log(json);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+
+    //method two set rooms
+    fetch(apiURL + "/Room/GetRooms")
+      .then((response) => response.json())
+      .then((json) => {
+        setRoomModel(json);
+        console.log(json);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+    //add html elment
+    //take the item model id to the schema
   }, [open]);
 
   const getContent = () => (
@@ -61,21 +97,45 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
         "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
       }}
     >
-      {/*               <TextField
-                fullWidth
-                variant="filled"
-                select
-                label="Inventory Item Type"
-                defaultValue=""
-                helperText="Please select your Inventory Item Type"
-                sx={{ gridColumn: "span 4" }}
-              >
-                {inventoryItemTypeModel.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField> */}
+      <FormControl fullWidth>
+        <InputLabel id="InventoryItemTypes">Inventory Item Type</InputLabel>
+        <Select
+          labelId="InventoryItemTypes"
+          id="inventoryItemTypes"
+          //value={inventoryItemTypes.inventoryItemTypeId.value}
+          helperText="Please select your Inventory Item Type"
+          variant="filled"
+          label="Inventory Item Type"
+          onChange={handleInventoryItemChange}
+        >
+          {inventoryItemTypes.map((inventoryItemTypeModel) => (
+            <MenuItem
+              key={inventoryItemTypeModel.inventoryItemTypeId.value}
+              value={inventoryItemTypeModel.inventoryItemTypeId.value}
+            >
+              {setInventoryItemTypes.name.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+     {/*  <TextField
+        fullWidth
+        id="InventoryItemTypes"
+        select
+        label="Select"
+        defaultValue=""
+        helperText="Please select your Inventory Item Type"
+        variant="filled"
+      >
+        {inventoryItemTypes.map((inventoryItemTypeModel) => (
+          <MenuItem
+            key={inventoryItemTypeModel.inventoryItemTypeId.value}
+            value={inventoryItemTypeModel.inventoryItemTypeId.value}
+          >
+            {setInventoryItemTypes.name.label}
+          </MenuItem>
+        ))}
+      </TextField> */}
       <TextField
         fullWidth
         variant="filled"
