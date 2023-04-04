@@ -47,14 +47,14 @@ namespace UpKeep.Controllers
 
         [HttpPost, ActionName("UpdateMaintenanceTask")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateMaintenanceTask(MaintenanceTaskModel MaintenanceTaskModel)
+        public async Task<IActionResult> UpdateMaintenanceTask(MaintenanceTaskAddOrUpdateModel MaintenanceTaskModel)
         {
             return Ok(await _maintenanceTaskService.UpdateMaintenanceTask(MaintenanceTaskModel));
         }
 
         [HttpPost, ActionName("AddMaintenanceTask")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddMaintenanceTask(MaintenanceTaskModel MaintenanceTaskModel)
+        public async Task<IActionResult> AddMaintenanceTask(MaintenanceTaskAddOrUpdateModel MaintenanceTaskModel)
         {
             return Ok(await _maintenanceTaskService.AddMaintenanceTask(MaintenanceTaskModel));
         }

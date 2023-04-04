@@ -38,13 +38,13 @@ namespace UpKeep.Services
             return model;
         }
 
-        public async Task<int> UpdateInventoryItem(InventoryItemModel inventoryItemModel)
+        public async Task<int> UpdateInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel)
         {
             var model = mapper.Map<InventoryItem>(inventoryItemModel);
             return await upKeepDBContext.UpdateInventoryItem(model);
         }
 
-        public async Task<int> AddInventoryItem(InventoryItemModel inventoryItemModel)
+        public async Task<int> AddInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel)
         {
             var model = mapper.Map<InventoryItem>(inventoryItemModel);
             return await upKeepDBContext.AddInventoryItem(model);

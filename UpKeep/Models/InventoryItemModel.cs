@@ -13,8 +13,8 @@
         public int RoomId { get; set; }
         public string? QrcodeId { get; set; }
 
-        public virtual InventoryItemTypeModel InventoryItemTypeModel { get; set; } = null!;
-        public virtual RoomModel RoomModel { get; set; } = null!;
+        public virtual InventoryItemTypeModel? InventoryItemTypeModel { get; set; } = null!;
+        public virtual RoomModel? RoomModel { get; set; } = null!;
         //public virtual ICollection<InventoryItemMaintenanceTask> InventoryItemMaintenanceTasksModel { get; set; }
     }
 }

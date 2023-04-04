@@ -7,68 +7,66 @@ import {
   FormControl,
 } from "@mui/material";
 import BasicModal from "../common/BasicModal/BasicModal";
-import { useForm } from "react-hook-form";
 import Select from "@mui/material/Select";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-const initialValues = {
-  inventoryItemTypeModel: "",
-  inventoryItemCost: "",
-  purchaseDate: "",
-  roomModel: {
-    roomLocation: "",
-    name: "",
-    roomNumber: "",
-  },
-};
-
 const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
-  const [values, setValues] = useState(initialValues);
   const [inventoryItemTypes, setInventoryItemTypes] = useState([]);
   const [roomModel, setRoomModel] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const InventoryItemSchema = Yup.object().shape({
-    inventoryItemTypeModel: Yup.object().required("required"),
-    inventoryItemCost: Yup.number().required("required"),
-    purchaseDate: Yup.date().required("required"),
-    roomModel: Yup.object().shape({
-      roomLocation: Yup.string().required("required"),
-      name: Yup.string().required("required"),
-      roomNumber: Yup.string().required("required"),
-    }),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(InventoryItemSchema),
-  });
-
-  const addInventoryItem = (data) => {
-    addNewInventoryItem(data);
-  };
-
-  const handleChange = (value) => {
-    setValues(value);
-  };
+  const [inventoryTypeId, setInventoryItemTypeId] = useState(-1);
+  const [roomId, setRoomId] = useState(-1);
+  const [purchaseDate, setPurchaseDate] = useState(new Date());
+  const [inventoryItemCost, setInventoryItemCost] = useState("");
+  
   const handleInventoryItemChange = (event) => {
-    setInventoryItemTypes(event.target.value);
+    setInventoryItemTypeId(event.target.value); //inventory item type id 
   };
+
+  const handleRoomChange = (event) => {
+    setRoomId(event.target.value);
+  }
+
+  const handleInventoryItemCost = (event) => {
+    setInventoryItemCost(event.target.value);
+  }
+
+  const handlePurchaseDate = (event) => {
+    setPurchaseDate(event.target.value);
+  }
+
+  const handleSubmit = (event) => {
+    // build inventory model
+    const inventoryModel=  {
+      InventoryItemId: 0,
+      InventoryItemTypeId: inventoryTypeId,
+      InventoryItemCost: inventoryItemCost,
+      PurchaseDate: purchaseDate,
+      RoomId: roomId,
+      QrcodeId: null,
+    }
+
+    //make post call to save
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(inventoryModel)
+  };
+    fetch(apiURL + '/InventoryItem/AddInventoryItem', requestOptions)
+      .then(response => response.json())
+      .then(data => console.log(data));
+
+  }
 
   const apiURL = process.env.REACT_APP_API_URL;
   useEffect(() => {
-    if (open) setValues(initialValues);
+
     //method one sset inventory types
     fetch(apiURL + "/InventoryItemType/GetInventoryItemTypes")
       .then((response) => response.json())
       .then((json) => {
         setInventoryItemTypes(json);
-        console.log(json);
       })
       .catch(() => {
         console.log("error");
@@ -79,7 +77,6 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
       .then((response) => response.json())
       .then((json) => {
         setRoomModel(json);
-        console.log(json);
       })
       .catch(() => {
         console.log("error");
@@ -102,40 +99,37 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
         <Select
           labelId="InventoryItemTypes"
           id="inventoryItemTypes"
-          //value={inventoryItemTypes.inventoryItemTypeId.value}
           helperText="Please select your Inventory Item Type"
           variant="filled"
           label="Inventory Item Type"
           onChange={handleInventoryItemChange}
         >
           {inventoryItemTypes.map((inventoryItemTypeModel) => (
-            <MenuItem
-              key={inventoryItemTypeModel.inventoryItemTypeId.value}
-              value={inventoryItemTypeModel.inventoryItemTypeId.value}
-            >
-              {setInventoryItemTypes.name.label}
+            <MenuItem value={inventoryItemTypeModel.inventoryItemTypeId} >
+              {inventoryItemTypeModel.name}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-     {/*  <TextField
-        fullWidth
-        id="InventoryItemTypes"
-        select
-        label="Select"
-        defaultValue=""
-        helperText="Please select your Inventory Item Type"
-        variant="filled"
-      >
-        {inventoryItemTypes.map((inventoryItemTypeModel) => (
-          <MenuItem
-            key={inventoryItemTypeModel.inventoryItemTypeId.value}
-            value={inventoryItemTypeModel.inventoryItemTypeId.value}
-          >
-            {setInventoryItemTypes.name.label}
-          </MenuItem>
-        ))}
-      </TextField> */}
+
+      <FormControl fullWidth>
+        <InputLabel id="Rooms">Rooms</InputLabel>
+        <Select
+          labelId="Rooms"
+          id="rooms"
+          helperText="Please select room"
+          variant="filled"
+          label="Room"
+          onChange={handleRoomChange}
+        >
+          {roomModel.map((roomModel) => (
+            <MenuItem value={roomModel.roomId} >
+              {roomModel.roomLocation} - {roomModel.roomNumber}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>      
+
       <TextField
         fullWidth
         variant="filled"
@@ -144,78 +138,17 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
         label="$ Inventory Item Cost"
         type="number"
         required
-        {...register("inventoryItemCost")}
-        error={errors.inventoryItemCost ? true : false}
-        helperText={errors.inventoryItemCost?.message}
-        value={values.inventoryItemCost}
-        onChange={(event) =>
-          handleChange({ ...values, inventoryItemCost: event.target.value })
-        }
+        onChange={handleInventoryItemCost}
         sx={{ gridColumn: "span 4" }}
       />
       <TextField
         name="purchaseDate"
         type="date"
         required
-        {...register("inventorypurchaseDateItemCost")}
-        error={errors.purchaseDate ? true : false}
-        helperText={errors.purchaseDate?.message}
-        value={values.purchaseDate}
-        onChange={(event) =>
-          handleChange({ ...values, purchaseDate: event.target.value })
-        }
+        onChange={handlePurchaseDate}
         sx={{ gridColumn: "span 4" }}
       />
-      {/* <TextField
-        fullWidth
-        variant="filled"
-        type="text"
-        label="Room Location"
-        helperText="Provide Room Floor"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.roomLocation}
-        name="roomLocation"
-        sx={{ gridColumn: "span 4" }}
-      />
-      <TextField
-        fullWidth
-        variant="filled"
-        type="text"
-        label="Room Type"
-        helperText="Provide Room Type"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.roomTypeModel.name}
-        name="name"
-        sx={{ gridColumn: "span 4" }}
-      />
-      <TextField
-        fullWidth
-        variant="filled"
-        type="number"
-        label="Room Number"
-        helperText="Provide Room Number"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.roomNumber}
-        name="roomNumber"
-        sx={{ gridColumn: "span 4" }}
-      />
-      <TextField
-        placeholder="Room number"
-        name="roomNumber"
-        label="Room number"
-        type
-        required
-        {...register("phoneNumber")}
-        error={errors.phoneNumber ? true : false}
-        helperText={errors.phoneNumber?.message}
-        value={values.phoneNumber}
-        onChange={(event) =>
-          handleChange({ ...values, phoneNumber: event.target.value })
-        }
-      /> */}
+    
     </Box>
   );
   return (
@@ -225,7 +158,7 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
       title="New Inventory Item"
       subTitle="Fill out all the following feilds to create a new Inventory Item."
       content={getContent()}
-      onSubmit={handleSubmit(addInventoryItem)}
+      onSubmit={handleSubmit}
     />
   );
 };

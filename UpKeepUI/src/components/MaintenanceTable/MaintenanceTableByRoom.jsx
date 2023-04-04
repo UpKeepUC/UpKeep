@@ -18,7 +18,7 @@ const { roomId } = props;
 const [maintenanceTasks, setMaintenanceTasks] = useState([]);
 const apiURL = process.env.REACT_APP_API_URL;
    useEffect(() => {
-        const id = window.location.pathname.split('/');
+        const id = window.location.pathname.split('/')[2];
         console.log(id);
         fetch(apiURL + '/MaintenanceTask/GetMaintenanceTaskByRoomId?id='+id)
             .then((response) => response.json())

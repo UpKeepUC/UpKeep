@@ -40,14 +40,14 @@ namespace UpKeep.Controllers
 
         [HttpPost, ActionName("UpdateInventoryItem")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateInventoryItem(InventoryItemModel inventoryItemModel)
+        public async Task<IActionResult> UpdateInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel)
         {
             return Ok(await _inventoryItemService.UpdateInventoryItem(inventoryItemModel));
         }
 
         [HttpPost, ActionName("AddInventoryItem")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddInventoryItem(InventoryItemModel inventoryItemModel)
+        public async Task<IActionResult> AddInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel)
         {
             return Ok(await _inventoryItemService.AddInventoryItem(inventoryItemModel));
         }

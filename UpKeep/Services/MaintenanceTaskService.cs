@@ -45,13 +45,13 @@ namespace UpKeep.Services
             return model;
         }
 
-        public async Task<int> UpdateMaintenanceTask(MaintenanceTaskModel maintenanceTaskModel)
+        public async Task<int> UpdateMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTaskModel)
         {
             var model = mapper.Map<MaintenanceTask>(maintenanceTaskModel);
             return await upKeepDBContext.UpdateMaintenanceTask(model);
         }
 
-        public async Task<int> AddMaintenanceTask(MaintenanceTaskModel maintenanceTaskModel)
+        public async Task<int> AddMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTaskModel)
         {
             var model = mapper.Map<MaintenanceTask>(maintenanceTaskModel);
             return await upKeepDBContext.AddMaintenanceTask(model);
