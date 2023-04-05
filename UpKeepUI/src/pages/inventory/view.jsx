@@ -1,21 +1,30 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Box, Grid, Modal, useTheme, TextField } from "@mui/material";
+import React, { useState, useEffect} from "react";
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Box, TextField, MenuItem, Dialog, DialogTitle, DialogContent, FormControl, InputLabel, Grid } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { tokens } from "../../theme";
-import Header from "../../components/common/Header";
+import Select from "@mui/material/Select";
 import demoqrcode from "./demoqrcode.png"
-import MaintenanceTable from "../../components/MaintenanceTable/MaintenanceTableByInventory";
+import axios from "axios";
 
  const InventoryView = () => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-    const [inventoryItem, setInventoryItem] = useState({});
+
+    const navigate = useNavigate();
+    const [inventoryItemTypes, setInventoryItemTypes] = useState([]);
+    const [roomModel, setRoomModel] = useState([]);
+
     const [qrCodeGenerated, setQRCodeGenerated] = useState(false);
 
+    const [inventoryItemId, setInventoryItemId] = useState(-1);
     const [inventoryTypeId, setInventoryItemTypeId] = useState(-1);
     const [roomId, setRoomId] = useState(-1);
-    const [purchaseDate, setPurchaseDate] = useState(new Date());
+    const [purchaseDate, setPurchaseDate] = useState(dayjs('2000-01-01'));
     const [inventoryItemCost, setInventoryItemCost] = useState("");
+
+    const [responseReceived, setResponseReceived] = useState(false);
     
     const handleInventoryItemChange = (event) => {
       setInventoryItemTypeId(event.target.value); //inventory item type id 
@@ -26,27 +35,21 @@ import MaintenanceTable from "../../components/MaintenanceTable/MaintenanceTable
     }
   
     const handleInventoryItemCost = (event) => {
-      console.log(event.target.value);
       setInventoryItemCost(event.target.value);
     }
   
     const handlePurchaseDate = (event) => {
-      console.log(event.target.value);
-      setPurchaseDate(event.target.value);
+      console.log(event.$d);
+      setPurchaseDate(event.$d);
     }
-    
-
+  
     const handleSubmit = (event) => {
         event.preventDefault();
         const apiURL = process.env.REACT_APP_API_URL;
-        const data = new FormData(event.currentTarget);
-
-        console.log(event);
-        console.log("save");
 
         //build update model
         const inventoryModel = {
-          InventoryItemId: 0,
+          InventoryItemId: inventoryItemId,
           InventoryItemTypeId: inventoryTypeId,
           InventoryItemCost: inventoryItemCost,
           PurchaseDate: purchaseDate,
@@ -60,24 +63,40 @@ import MaintenanceTable from "../../components/MaintenanceTable/MaintenanceTable
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(inventoryModel)
       };
-        fetch(apiURL + '/InventoryItem/UpdateInventoryItem', requestOptions)
+        fetch('https://localhost:7285/api/InventoryItem/UpdateInventoryItem', requestOptions)
           .then(response => response.json())
           .then(data => console.log(data));
+        
+          // setup onclose handler instead of refreshing page
+          navigate('/inventory');
+          window.location.reload();
       };
 
     const apiURL = process.env.REACT_APP_API_URL;
     useEffect(() => {
+        const getData = async() => {
+          const id = window.location.pathname.split('/')[2];
+          const response = await axios.get('https://localhost:7285/api/InventoryItem/GetInventoryItemById?id='+id);
+          if(response.data){
+            setInventoryItemId(response.data.inventoryItemId);
+            setInventoryItemTypeId(response.data.inventoryItemTypeId);
+            setRoomId(response.data.roomId);
+            setInventoryItemCost(response.data.inventoryItemCost);        
+            setPurchaseDate(response.data.purchaseDate);
+            setResponseReceived(true);
+          }
 
-        const id = window.location.pathname.split('/')[2];
-        fetch('https://localhost:7285/api/InventoryItem/GetInventoryItemById?id='+id)
-            .then((response) => response.json())
-            .then((json) => {
-                setInventoryItem(json);               
-            })
-            .catch(() => {console.log('error')});
+          const typeResponse = await axios.get(apiURL + "/InventoryItemType/GetInventoryItemTypes");
+          if(typeResponse.data){
+            setInventoryItemTypes(typeResponse.data);
+          }
 
-        setInventoryItemCost(inventoryItem.inventoryItemCost);
-        setPurchaseDate(inventoryItem.purchaseDate);
+          const roomResponse = await axios.get(apiURL + "/Room/GetRooms");
+          if(roomResponse.data){
+            setRoomModel(roomResponse.data)
+          }
+        }
+        getData();
         }, []);
 
     const generateQRCode = () => {
@@ -85,53 +104,72 @@ import MaintenanceTable from "../../components/MaintenanceTable/MaintenanceTable
     }
   
     return (
-      <Box m="20px">
-        <Header title="INVENTORY ITEM" subtitle="Manage Inventory Item!" />
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        <TextField
+      <Dialog open={responseReceived} m="20px">
+        <DialogTitle>INVENTORY ITEM</DialogTitle>
+        <DialogContent>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container direction="row" padding="10px">
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="InventoryItemTypes">Inventory Item Type</InputLabel>
+                  <Select
+                    labelId="InventoryItemTypes"
+                    id="inventoryItemTypes"
+                    defaultValue={inventoryTypeId}
+                    label="Inventory Item Type"
+                    onChange={handleInventoryItemChange}
+                  >
+                  {inventoryItemTypes.map((inventoryItemTypeModel) => (
+                    <MenuItem value={inventoryItemTypeModel.inventoryItemTypeId} >
+                      {inventoryItemTypeModel.name}
+                    </MenuItem>
+                  ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="Rooms">Rooms</InputLabel>
+                  <Select
+                    labelId="Rooms"
+                    id="rooms"
+                    defaultValue={roomId}
+                    label="Room"
+                    onChange={handleRoomChange}
+                  >
+                  {roomModel.map((roomModel) => (
+                    <MenuItem value={roomModel.roomId} >
+                      {roomModel.roomLocation} - {roomModel.roomNumber}
+                    </MenuItem>
+                  ))}
+                  </Select>
+                </FormControl>           
+              </Grid>
+            </Grid>
+            <Grid container direction="row">
+              <Grid item xs={12} padding="10px">
+              <TextField
+                  label="Cost"
                   required
                   name="inventoryItemCost"
                   fullWidth
                   id="inventoryItemCost"                 
-                  defaultValue={inventoryItem.inventoryItemCost}
+                  defaultValue={inventoryItemCost}
                   onChange={handleInventoryItemCost}
                 />
-        <TextField
+              </Grid>
+              <Grid item xs={12} padding="10px">
+              <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
+                <DatePicker 
+                  label="Purchase Date"
                   required
-                  fullWidth
-                  id="purchaseDate"                 
-                  name="purchaseDate"
-                  defaultValue={inventoryItem.purchaseDate}
+                               
+                  defaultValue={dayjs(purchaseDate)}
                   onChange={handlePurchaseDate}
                 />
-{/* 
-
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                
+              </LocalizationProvider>              
               </Grid>
-              <Grid item xs={12} sm={6}>
-                
-              </Grid> */}
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  disabled
-                  fullWidth
-                  id="inventoryItemType"                 
-                  name="inventoryItemType"
-                  value={inventoryItem.inventoryItemTypeModel.name}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  disabled
-                  fullWidth
-                  id="room"                 
-                  name="room"
-                  value={inventoryItem.roomModel.roomLocation + " - " + inventoryItem.roomModel.roomNumber}
-                />
-              </Grid>                                        */}
-            {/* </Grid> */}
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -148,50 +186,15 @@ import MaintenanceTable from "../../components/MaintenanceTable/MaintenanceTable
             >
               Delete
             </Button>
-            {/* <Box m="40px 0 0 0"
-        height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-        }}>
-          <h2>Maintenance Tasks for Room</h2>
-          <MaintenanceTable inventoryId={inventoryItem.inventoryItemId}/>  
-            <Button
-                onClick={generateQRCode}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Generate QR Code
-            </Button>
-    </Box> */}
             {qrCodeGenerated &&
                 <img src={demoqrcode} alt='qr code here'/>
             }
                     
         </Box>
-      </Box>
+        </DialogContent>
+
+        
+      </Dialog>
     );
   };
   
