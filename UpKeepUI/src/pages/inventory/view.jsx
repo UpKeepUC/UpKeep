@@ -6,11 +6,34 @@ import Header from "../../components/common/Header";
 import demoqrcode from "./demoqrcode.png"
 import MaintenanceTable from "../../components/MaintenanceTable/MaintenanceTableByInventory";
 
-const InventoryView = () => {
+ const InventoryView = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [inventoryItem, setInventoryItem] = useState({});
     const [qrCodeGenerated, setQRCodeGenerated] = useState(false);
+
+    const [inventoryTypeId, setInventoryItemTypeId] = useState(-1);
+    const [roomId, setRoomId] = useState(-1);
+    const [purchaseDate, setPurchaseDate] = useState(new Date());
+    const [inventoryItemCost, setInventoryItemCost] = useState("");
+    
+    const handleInventoryItemChange = (event) => {
+      setInventoryItemTypeId(event.target.value); //inventory item type id 
+    };
+  
+    const handleRoomChange = (event) => {
+      setRoomId(event.target.value);
+    }
+  
+    const handleInventoryItemCost = (event) => {
+      console.log(event.target.value);
+      setInventoryItemCost(event.target.value);
+    }
+  
+    const handlePurchaseDate = (event) => {
+      console.log(event.target.value);
+      setPurchaseDate(event.target.value);
+    }
     
 
     const handleSubmit = (event) => {
@@ -18,18 +41,43 @@ const InventoryView = () => {
         const apiURL = process.env.REACT_APP_API_URL;
         const data = new FormData(event.currentTarget);
 
+        console.log(event);
         console.log("save");
+
+        //build update model
+        const inventoryModel = {
+          InventoryItemId: 0,
+          InventoryItemTypeId: inventoryTypeId,
+          InventoryItemCost: inventoryItemCost,
+          PurchaseDate: purchaseDate,
+          RoomId: roomId,
+          QrcodeId: null,
+        }
+
+        //submit post
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(inventoryModel)
+      };
+        fetch(apiURL + '/InventoryItem/UpdateInventoryItem', requestOptions)
+          .then(response => response.json())
+          .then(data => console.log(data));
       };
 
     const apiURL = process.env.REACT_APP_API_URL;
     useEffect(() => {
+
         const id = window.location.pathname.split('/')[2];
-        fetch(apiURL + '/InventoryItem/GetInventoryItemById?id='+id)
+        fetch('https://localhost:7285/api/InventoryItem/GetInventoryItemById?id='+id)
             .then((response) => response.json())
             .then((json) => {
-                setInventoryItem(json);
+                setInventoryItem(json);               
             })
-            .catch(() => {console.log('error')})
+            .catch(() => {console.log('error')});
+
+        setInventoryItemCost(inventoryItem.inventoryItemCost);
+        setPurchaseDate(inventoryItem.purchaseDate);
         }, []);
 
     const generateQRCode = () => {
@@ -40,27 +88,50 @@ const InventoryView = () => {
       <Box m="20px">
         <Header title="INVENTORY ITEM" subtitle="Manage Inventory Item!" />
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="cost"
+        <TextField
                   required
+                  name="inventoryItemCost"
                   fullWidth
-                  id="cost"                 
-                  value={inventoryItem.inventoryItemCost}
-                  autoFocus
+                  id="inventoryItemCost"                 
+                  defaultValue={inventoryItem.inventoryItemCost}
+                  onChange={handleInventoryItemCost}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
+        <TextField
                   required
                   fullWidth
                   id="purchaseDate"                 
                   name="purchaseDate"
-                  value={inventoryItem.purchaseDate}
+                  defaultValue={inventoryItem.purchaseDate}
+                  onChange={handlePurchaseDate}
                 />
-              </Grid>             
-            </Grid>
+{/* 
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                
+              </Grid> */}
+              {/* <Grid item xs={12} sm={6}>
+                <TextField
+                  disabled
+                  fullWidth
+                  id="inventoryItemType"                 
+                  name="inventoryItemType"
+                  value={inventoryItem.inventoryItemTypeModel.name}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  disabled
+                  fullWidth
+                  id="room"                 
+                  name="room"
+                  value={inventoryItem.roomModel.roomLocation + " - " + inventoryItem.roomModel.roomNumber}
+                />
+              </Grid>                                        */}
+            {/* </Grid> */}
             <Button
               type="submit"
               fullWidth
@@ -69,7 +140,15 @@ const InventoryView = () => {
             >
               Save
             </Button>
-            <Box m="40px 0 0 0"
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Delete
+            </Button>
+            {/* <Box m="40px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -106,7 +185,7 @@ const InventoryView = () => {
             >
               Generate QR Code
             </Button>
-    </Box>
+    </Box> */}
             {qrCodeGenerated &&
                 <img src={demoqrcode} alt='qr code here'/>
             }

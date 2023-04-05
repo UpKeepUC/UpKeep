@@ -33,6 +33,8 @@ namespace UpKeepData.Data
         {
             return await InventoryItems
                 .Where(x => x.InventoryItemId == id)
+                .Include(x => x.InventoryItemType)
+                .Include(x => x.Room)
                 .AsNoTracking()
                 .SingleAsync();
         }
