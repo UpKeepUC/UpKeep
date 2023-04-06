@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import Box from '@mui/material/Box';
 import { GridToolbar } from '@mui/x-data-grid'
 import DataTable from '../common/dataTable';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
     { field: 'inventoryItemId', headerName: 'Id', type: "number", headerAlign: "left", align: "left",},
@@ -16,6 +16,9 @@ const inventoryItemTableStyles = {
 };
 
 const InventoryTable = ({ onError }) => {
+
+const navigate = useNavigate();
+  
 const [inventoryItems, setInventoryItems] = useState([]);
 const apiURL = process.env.REACT_APP_API_URL;
    useEffect(() => {
@@ -35,6 +38,7 @@ return (
             loading={!inventoryItems.length}
             sx={inventoryItemTableStyles}
             getRowId={(row) => row.inventoryItemId}
+            handleClick={(event) => navigate('/inventory/' + event.id)}
             />
     );
 };

@@ -10,6 +10,6 @@ namespace UpKeep.Services.Interfaces
         Task<IEnumerable<MaintenanceTaskModel>> GetMaintenanceTaskByInventoryId(int id);
         Task<int> UpdateMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTask);
         Task<int> AddMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTaskModel);
-        Task<int> DeleteMaintenanceTask(MaintenanceTaskModel maintenanceTaskModel);
+        Task<int> DeleteMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTaskModel);
     }
 }

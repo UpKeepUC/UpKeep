@@ -61,7 +61,7 @@ namespace UpKeep.Controllers
 
         [HttpPost, ActionName("DeleteMaintenanceTask")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteMaintenanceTask(MaintenanceTaskModel MaintenanceTaskModel)
+        public async Task<IActionResult> DeleteMaintenanceTask(MaintenanceTaskAddOrUpdateModel MaintenanceTaskModel)
         {
             return Ok(await _maintenanceTaskService.DeleteMaintenanceTask(MaintenanceTaskModel));
         }

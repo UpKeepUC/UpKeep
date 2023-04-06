@@ -50,7 +50,7 @@ namespace UpKeep.Services
             return await upKeepDBContext.AddInventoryItem(model);
         }
 
-        public async Task<int> DeleteInventoryItem(InventoryItemModel inventoryItemModel)
+        public async Task<int> DeleteInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel)
         {
             var model = mapper.Map<InventoryItem>(inventoryItemModel);
             return await upKeepDBContext.DeleteInventoryItem(model);

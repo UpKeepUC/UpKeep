@@ -1,19 +1,14 @@
 import React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
-import { Route, Routes, useNavigate } from 'react-router-dom';
 
 const DataTable = ({
     rows, 
     columns, 
     loading,
     sx,
-    getRowId
+    getRowId,
+    handleClick
 }) => {
-
-    const navigate = useNavigate();
-    const handleClick = (event) => {
-        navigate('/inventory/' + event.id);
-    }
 
         return (
             <DataGrid

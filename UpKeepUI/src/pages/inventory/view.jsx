@@ -23,6 +23,7 @@ import axios from "axios";
     const [roomId, setRoomId] = useState(-1);
     const [purchaseDate, setPurchaseDate] = useState(dayjs('2000-01-01'));
     const [inventoryItemCost, setInventoryItemCost] = useState("");
+    const [qrCodeId, setQrCodeId] = useState("");
 
     const [responseReceived, setResponseReceived] = useState(false);
     
@@ -42,6 +43,35 @@ import axios from "axios";
       console.log(event.$d);
       setPurchaseDate(event.$d);
     }
+
+    const handleDeleteClick = (event) => {
+      event.preventDefault();
+      const apiURL = process.env.REACT_APP_API_URL;
+
+        //build update model
+      const inventoryModel = {
+        InventoryItemId: inventoryItemId,
+        InventoryItemTypeId: inventoryTypeId,
+        InventoryItemCost: inventoryItemCost,
+        PurchaseDate: purchaseDate,
+        RoomId: roomId,
+        QrcodeId: qrCodeId,
+      }
+
+      //submit post
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(inventoryModel)
+    };
+      fetch(apiURL + '/InventoryItem/DeleteInventoryItem', requestOptions)
+        .then(response => response.json())
+        .then(data => console.log(data));
+      
+        // setup onclose handler instead of refreshing page
+        navigate('/inventory');
+        window.location.reload();
+    }
   
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -54,7 +84,7 @@ import axios from "axios";
           InventoryItemCost: inventoryItemCost,
           PurchaseDate: purchaseDate,
           RoomId: roomId,
-          QrcodeId: null,
+          QrcodeId: qrCodeId,
         }
 
         //submit post
@@ -63,7 +93,7 @@ import axios from "axios";
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(inventoryModel)
       };
-        fetch('https://localhost:7285/api/InventoryItem/UpdateInventoryItem', requestOptions)
+        fetch(apiURL +'/InventoryItem/UpdateInventoryItem', requestOptions)
           .then(response => response.json())
           .then(data => console.log(data));
         
@@ -76,13 +106,14 @@ import axios from "axios";
     useEffect(() => {
         const getData = async() => {
           const id = window.location.pathname.split('/')[2];
-          const response = await axios.get('https://localhost:7285/api/InventoryItem/GetInventoryItemById?id='+id);
+          const response = await axios.get(apiURL +'/InventoryItem/GetInventoryItemById?id='+id);
           if(response.data){
             setInventoryItemId(response.data.inventoryItemId);
             setInventoryItemTypeId(response.data.inventoryItemTypeId);
             setRoomId(response.data.roomId);
             setInventoryItemCost(response.data.inventoryItemCost);        
             setPurchaseDate(response.data.purchaseDate);
+            setQrCodeId(response.data.qrcodeId);
             setResponseReceived(true);
           }
 
@@ -179,10 +210,11 @@ import axios from "axios";
               Save
             </Button>
             <Button
-              type="submit"
+              color="error"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleDeleteClick}
             >
               Delete
             </Button>
