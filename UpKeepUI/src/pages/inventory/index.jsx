@@ -6,6 +6,7 @@ import CommonButton from "../../components/common/CommonButton/CommonButton";
 import InventoryTable from "../../components/InventoryTable/InventoryTable";
 import Header from "../../components/common/Header";
 import CreateInventoryItemModal from "../../components/CreateInventoryItemModal/CreateInventoryItemModal";
+import { grey } from "@mui/material/colors";
 
 const Inventory = () => {
 
@@ -45,7 +46,7 @@ const Inventory = () => {
           variant="contained"
           onClick={addInventoryItems}
           size="large"
-          //sx={cardHeaderStyles.addInventoryItemButton}
+          color="secondary"
         >
           Add Inventory Item
         </CommonButton>
@@ -73,9 +74,6 @@ const Inventory = () => {
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
             backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${colors.grey[100]} !important`,

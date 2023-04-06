@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import DataTable from '../common/dataTable';
 
 const columns = [
-    { field: 'maintenanceTaskId', headerName: 'Id', flex: 1 },
+    { field: 'maintenanceTaskId', headerName: 'Id', type: "number", headerAlign: "left", align: "left", },
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'description', headerName: 'Description', flex: 1 },
     { field: 'maintenanceTaskDueDate', headerName: 'Task Due Date', flex: 1 },
 ];
 
 const MaintenanceTasksTableStyles = {
-    height: '650px',
+    height: '300px',
 };
 
 function MaintenanceTable(props) {

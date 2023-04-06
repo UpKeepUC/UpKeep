@@ -65,6 +65,7 @@ const InventoryView = () => {
               type="submit"
               fullWidth
               variant="contained"
+              color="secondary"
               sx={{ mt: 3, mb: 2 }}
             >
               Save
@@ -103,6 +104,7 @@ const InventoryView = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="secondary"
             >
               Generate QR Code
             </Button>

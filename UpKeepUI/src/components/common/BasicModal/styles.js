@@ -3,10 +3,14 @@ export const modalStyles = {
         position: 'absolute',
         top: '50%',
         left: '50%',
+        width: '70%',
         transform: 'translate(-50%, -50%)',
         bgcolor: 'background.paper',
         boxShadow: 24,
         p: 4,
+        
+
+        
     },
     inputFields: {
         display: 'flex',
@@ -20,5 +24,7 @@ export const modalStyles = {
     buttons: {
         display: 'flex',
         justifyContent: 'end',
+        padding: '15px',
+        
     }
 };
