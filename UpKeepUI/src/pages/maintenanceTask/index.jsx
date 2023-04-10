@@ -39,7 +39,7 @@ const MaintenanceTask = () => {
           variant="contained"
           onClick={addMaintenanceTask}
           size="large"
-          //sx={cardHeaderStyles.addInventoryItemButton}
+          color="secondary"
         >
           Add Maintenance Task
         </CommonButton>

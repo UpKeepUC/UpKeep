@@ -44,11 +44,12 @@ body,
 }
 
 .floor-plan {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
   max-width: 100%;
   margin: auto;
   justify-content: center;
+  padding: 50px;
 }
 
 .room {
@@ -67,6 +68,6 @@ body,
 }
 
 .room:hover {
-  border-color: #0077ff;
-  color: #0077ff;
+  border-color: #4cceac;
+  color: #4cceac;
 }
