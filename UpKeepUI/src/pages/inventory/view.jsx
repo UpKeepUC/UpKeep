@@ -10,6 +10,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  DialogActions,
   FormControl,
   InputLabel,
   Grid,
@@ -99,7 +100,9 @@ const InventoryView = () => {
         .then(response => response.json())
         .then(data => console.log(data));
       
-       
+
+        navigate('/inventory');
+        window.location.reload();
     }
 
     const handleCloseClick = (event) => {
@@ -250,6 +253,7 @@ const InventoryView = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Save
             </Button>
