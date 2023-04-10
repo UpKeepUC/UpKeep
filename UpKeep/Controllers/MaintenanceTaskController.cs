@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UpKeep.Models;
 using UpKeep.Services.Interfaces;
+using UpKeepData.Models;
 
 namespace UpKeep.Controllers
 {
@@ -18,7 +19,7 @@ namespace UpKeep.Controllers
         }
 
         [HttpGet, ActionName("GetMaintenanceTasks")]
-        [ProducesResponseType(typeof(ICollection<MaintenanceTaskModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<MaintenanceTaskRoomModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMaintenanceTasks()
         {
             return Ok(await _maintenanceTaskService.GetMaintenanceTasks());

@@ -3,6 +3,7 @@ using UpKeep.Models;
 using UpKeep.Services.Interfaces;
 using UpKeepData.Entity;
 using UpKeepData.Interfaces;
+using UpKeepData.Models;
 
 namespace UpKeep.Services
 {
@@ -17,11 +18,10 @@ namespace UpKeep.Services
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<MaintenanceTaskModel>> GetMaintenanceTasks()
+        public async Task<IEnumerable<MaintenanceTaskRoomModel>> GetMaintenanceTasks()
         {
             var result = await upKeepDBContext.GetMaintenanceTasks();
-            var models = mapper.Map<ICollection<MaintenanceTaskModel>>(result);
-            return models;
+            return result;
         }
 
         public async Task<MaintenanceTaskModel> GetMaintenanceTaskById(int id)

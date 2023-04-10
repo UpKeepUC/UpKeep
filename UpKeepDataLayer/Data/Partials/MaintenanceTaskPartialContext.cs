@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UpKeepData.Entity;
 using UpKeepData.Interfaces;
+using UpKeepData.Models;
 
 namespace UpKeepData.Data
 {
@@ -12,12 +9,81 @@ namespace UpKeepData.Data
     {
         public virtual DbSet<MaintenanceTask> maintenanceTasks { get; set; } = null!;
 
-        public async Task<IEnumerable<MaintenanceTask>> GetMaintenanceTasks()
+        public async Task<IEnumerable<MaintenanceTaskRoomModel>> GetMaintenanceTasks()
         {
-            return await maintenanceTasks
+            var lmt = await maintenanceTasks
                 .Include(x => x.MaintenanceTaskType)
                 .AsNoTracking()
                 .ToListAsync();
+
+            var mtReturn =  new List<MaintenanceTaskRoomModel>();
+
+            foreach (var mt in lmt)
+            {
+                var mtit = await maintenanceTasks
+                .Join(InventoryItemMaintenanceTasks, mt => mt.MaintenanceTaskId, itmt => itmt.MaintenanceTaskId, (mt, itmt) => new { mt, itmt })
+                .Join(InventoryItems, x => x.itmt.InventoryItemId, i => i.InventoryItemId, (x, i) => new { x.mt, i })
+                .Where(x => x.mt.MaintenanceTaskId == mt.MaintenanceTaskId).ToListAsync();
+
+                if(mtit.Count > 0)
+                {
+                    var rooms = await Rooms.Where(x => x.RoomId == mtit[0].i.RoomId).ToListAsync();
+                    var mtrm = new MaintenanceTaskRoomModel()
+                    {
+                        Description = mt.Description,
+                        Name = mt.Name,
+                        MaintenanceTaskId = mt.MaintenanceTaskId,
+                        MaintenanceTaskTypeId = mt.MaintenanceTaskTypeId,
+                        MaintenanceTaskDueDate = mt.MaintenanceTaskDueDate,
+                        MaintenanceTaskCompletedDate = mt.MaintenanceTaskCompletedDate,
+                        MaintenanceTaskType = new MaintenanceTaskType()
+                        {
+                            MaintenanceTaskTypeId = mt.MaintenanceTaskType.MaintenanceTaskTypeId,
+                            Description = mt.MaintenanceTaskType.Description,
+                            Name = mt.MaintenanceTaskType.Name
+                        }
+                       
+
+                    };
+
+                    mtrm.MaintenanceTaskRooms = new List<MaintenanceTaskRoom>();
+
+                    foreach (var room in rooms)
+                    {
+                        mtrm.MaintenanceTaskRooms.Add(new MaintenanceTaskRoom()
+                        {
+                            RoomId = room.RoomId,
+                            RoomLocation = room.RoomLocation,
+                            RoomNumber = room.RoomNumber,
+                            RoomType = room.RoomType,
+                            RoomTypeId = room.RoomTypeId
+                        });
+                    }
+
+                    mtReturn.Add(mtrm);
+                }
+                else
+                {
+                    mtReturn.Add(new MaintenanceTaskRoomModel()
+                    {
+                        Description = mt.Description,
+                        Name = mt.Name,
+                        MaintenanceTaskId = mt.MaintenanceTaskId,
+                        MaintenanceTaskTypeId = mt.MaintenanceTaskTypeId,
+                        MaintenanceTaskDueDate = mt.MaintenanceTaskDueDate,
+                        MaintenanceTaskCompletedDate = mt.MaintenanceTaskCompletedDate,
+                        MaintenanceTaskType = new MaintenanceTaskType()
+                        {
+                            MaintenanceTaskTypeId = mt.MaintenanceTaskType.MaintenanceTaskTypeId,
+                            Description = mt.MaintenanceTaskType.Description,
+                            Name = mt.MaintenanceTaskType.Name
+                        }
+                    });
+                }
+            }
+
+            return mtReturn;
+
         }
 
         public async Task<MaintenanceTask> GetMaintenanceTaskById(int id)

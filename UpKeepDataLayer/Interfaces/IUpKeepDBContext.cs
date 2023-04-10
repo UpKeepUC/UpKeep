@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UpKeepData.Entity;
+using UpKeepData.Models;
 
 namespace UpKeepData.Interfaces
 {
@@ -27,7 +28,7 @@ namespace UpKeepData.Interfaces
         #endregion
 
         #region Maintenance Task
-        Task<IEnumerable<MaintenanceTask>> GetMaintenanceTasks();
+        Task<IEnumerable<MaintenanceTaskRoomModel>> GetMaintenanceTasks();
         Task<IEnumerable<MaintenanceTask>> GetMaintenanceTaskByRoomId(int id);
         Task<IEnumerable<MaintenanceTask>> GetMaintenanceTaskByInventoryId(int id);
         Task<MaintenanceTask> GetMaintenanceTaskById(int id);

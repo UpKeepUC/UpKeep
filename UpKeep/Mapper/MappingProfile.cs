@@ -2,6 +2,7 @@
 using UpKeep.Models;
 using UpKeepData.Data.UpKeepIdentityContext;
 using UpKeepData.Entity;
+using UpKeepData.Models;
 using User = UpKeepData.Data.UpKeepIdentityContext.User;
 
 namespace UpKeep.Mapper
