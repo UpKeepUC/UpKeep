@@ -54,7 +54,6 @@ const InventoryView = () => {
   };
 
     const handleGenerateClick = (event) => {
-
       if(!qrCodeGenerated){
       //get page link
       const link = window.location.href;
@@ -65,7 +64,7 @@ const InventoryView = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     };
-      fetch('https://localhost:7285/api/QRCode/GenerateQRCodeForInventoryItem?link=' + link, requestOptions)
+      fetch(apiURL + '/QRCode/GenerateQRCodeForInventoryItem?link=' + link, requestOptions)
         .then(response => response.json())
         .then(data => {
           setQRCodeImage('data:image/png;base64,'+ data.fileContents);
