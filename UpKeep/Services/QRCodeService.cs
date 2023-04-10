@@ -18,12 +18,14 @@ namespace UpKeep.Services
 
         public async Task<byte[]> GenerateQRCodeForInventoryItem(string link)
         {
-            var linkURI = new Uri("link");
+            var linkURI = new Uri(link);
+
+            var URI = new Uri($"https://{_configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"]}/qrcode/text");
 
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"https://{_configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Host"]}/qrcode/text"),
+                RequestUri = URI,
                 Headers =
                 {
                     { "X-RapidAPI-Key", _configuration.GetSection("QRCodeSecrets")["X-RapidAPI-Key"] },
