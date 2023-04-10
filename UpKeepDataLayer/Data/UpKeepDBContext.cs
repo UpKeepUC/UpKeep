@@ -14,7 +14,6 @@ namespace UpKeepData.Data
 
         public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<EmployeeMaintenanceTask> EmployeeMaintenanceTasks { get; set; } = null!;
-        public virtual DbSet<InventoryItemMaintenanceTask> InventoryItemMaintenanceTasks { get; set; } = null!;
         public virtual DbSet<Person> People { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 

@@ -46,6 +46,13 @@ namespace UpKeep.Controllers
             return Ok(await _maintenanceTaskService.GetMaintenanceTaskByInventoryId(id));
         }
 
+        [HttpPost, ActionName("LinkInventoryToMaintenanceTask")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        public async Task<IActionResult> LinkInventoryToMaintenanceTask(LinkInventoryToMaintenanceModel link)
+        {
+            return Ok(await _maintenanceTaskService.LinkMaintenanceTaskToInventoryItem(link));
+        }
+
         [HttpPost, ActionName("UpdateMaintenanceTask")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateMaintenanceTask(MaintenanceTaskAddOrUpdateModel MaintenanceTaskModel)

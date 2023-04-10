@@ -18,6 +18,12 @@ namespace UpKeep.Services
             this.mapper = mapper;
         }
 
+        public async Task<int> LinkMaintenanceTaskToInventoryItem(LinkInventoryToMaintenanceModel link)
+        {
+            var result = await upKeepDBContext.LinkMaintenanceTaskToInventoryItem(link);
+            return result;
+        }
+
         public async Task<IEnumerable<MaintenanceTaskRoomModel>> GetMaintenanceTasks()
         {
             var result = await upKeepDBContext.GetMaintenanceTasks();
