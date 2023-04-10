@@ -15,8 +15,8 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
   const [roomModel, setRoomModel] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const [maintenanceTaskId, setMaintenanceTaskTypeId] = useState(-1);
-  const [location, setLocation] = useState(-1);
+  const [maintenanceTaskTypeId, setMaintenanceTaskTypeId] = useState(-1);
+  const [roomId, setRoomId] = useState(-1);
   const [maintenanceTaskDueDate, setMaintenanceTaskDueDate] = useState(new Date());
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -25,9 +25,9 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
     setMaintenanceTaskTypeId(event.target.value); 
   };
 
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
-  };
+  const handleRoomChange = (event) => {
+    setRoomId(event.target.value);
+  }
 
   const handleMaintenanceTaskDueDate = (event) => {
     setMaintenanceTaskDueDate(event.target.value);
@@ -43,11 +43,12 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
   const handleSubmit = (event) => {
     // build inventory model
     const maintenanceModel = {
-      maintenanceTaskId: maintenanceTaskId,
-      location: location,
-      name: name,
-      description: description,
-      maintenanceTaskDueDate: maintenanceTaskDueDate
+      MaintenanceTaskId: 0,
+      MaintenanceTaskTypeId: maintenanceTaskTypeId,
+      RoomId: roomId,
+      Name: name,
+      Description: description,
+      MaintenanceTaskDueDate: maintenanceTaskDueDate
     };
 
     //make post call to save
@@ -116,7 +117,7 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
         </Select>
       </FormControl>
 
-      <FormControl sx={{ gridColumn: "span 4" }}>
+      {/* <FormControl sx={{ gridColumn: "span 4" }}>
         <InputLabel id="Rooms" color="grey">
           Locations
         </InputLabel>
@@ -127,7 +128,7 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
           helperText="Please select a location"
           variant="filled"
           label="Room"
-          onChange={handleLocationChange}
+          onChange={handleRoomChange}
           sx={{ gridColumn: "span 4" }}
         >
           {roomModel.map((roomModel) => (
@@ -136,7 +137,7 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
             </MenuItem>
           ))}
         </Select>
-      </FormControl>     
+      </FormControl>      */}
 
       <TextField
         fullWidth
