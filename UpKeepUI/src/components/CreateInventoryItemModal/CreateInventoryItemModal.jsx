@@ -163,7 +163,7 @@ const CreateInventoryItemModal = ({ open, onClose, addNewInventoryItem }) => {
       open={open}
       onClose={onClose}
       title="New Inventory Item"
-      subTitle="Fill out all the following feilds to create a new Inventory Item."
+      subTitle="Fill out all the following fields to create a new Inventory Item."
       content={getContent()}
       onSubmit={handleSubmit}
     />

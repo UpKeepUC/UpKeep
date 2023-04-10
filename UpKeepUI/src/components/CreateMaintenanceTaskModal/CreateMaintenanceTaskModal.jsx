@@ -1,50 +1,91 @@
 import React, { useState, useEffect } from "react";
-import { Box, TextField, MenuItem, InputAdornment } from "@mui/material";
+import {
+  Box,
+  TextField,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import BasicModal from "../common/BasicModal/BasicModal";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import Select from "@mui/material/Select";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-const initialValues = {
-  maintenanceTaskId: "null",
-  location: "",
-  name: "",
-  description: "",
-  maintenanceTaskDueDate: ""
-};
-
 const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) => {
-  const [values, setValues] = useState(initialValues);
+  const [maintenanceTaskTypes, setMaintenanceTypes] = useState([]);
+  const [roomModel, setRoomModel] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const MaintenanceTaskSchema = Yup.object().shape({
-    maintenanceTaskId: Yup.object().required("required"),
-    location: Yup.string().required("required"),
-    name: Yup.string().required("required"),
-    description: Yup.object().required("required"),
-    maintenanceTaskDueDate: Yup.date().required("required"),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(MaintenanceTaskSchema),
-  });
-
-  const addMaintenanceTask = (data) => {
-    addNewMaintenanceTask(data);
+  const [maintenanceTaskTypeId, setMaintenanceTaskTypeId] = useState(-1);
+  const [roomId, setRoomId] = useState(-1);
+  const [maintenanceTaskDueDate, setMaintenanceTaskDueDate] = useState(new Date());
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  
+  const handleMaintenanceTaskChange = (event) => {
+    setMaintenanceTaskTypeId(event.target.value); 
   };
 
-  const handleChange = (value) => {
-    setValues(value);
+  const handleRoomChange = (event) => {
+    setRoomId(event.target.value);
+  }
+
+  const handleMaintenanceTaskDueDate = (event) => {
+    setMaintenanceTaskDueDate(event.target.value);
   };
 
+  const handleName = (event) => {
+    setName(event.target.value);
+  };
+  const handleDescription = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    // build inventory model
+    const maintenanceModel = {
+      MaintenanceTaskId: 0,
+      MaintenanceTaskTypeId: maintenanceTaskTypeId,
+      RoomId: roomId,
+      Name: name,
+      Description: description,
+      MaintenanceTaskDueDate: maintenanceTaskDueDate
+    };
+
+    //make post call to save
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(maintenanceModel)
+  };
+    fetch(apiURL + "/MaintenanceTask/AddMaintenanceTask", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
+
+  const apiURL = process.env.REACT_APP_API_URL;
   useEffect(() => {
-    if (open) setValues(initialValues);
-  }, [open]);
+    //method one set inventory types
+    fetch(apiURL + "/MaintenanceTaskType/GetMaintenanceTaskTypes")
+      .then((response) => response.json())
+      .then((json) => {
+        setMaintenanceTypes(json);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+
+    //method two set rooms
+    fetch(apiURL + "/Room/GetRooms")
+      .then((response) => response.json())
+      .then((json) => {
+        setRoomModel(json);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+    //add html element
+    //take the item model id to the schema
+  }, [apiURL, open]);
 
   const getContent = () => (
     <Box
@@ -55,86 +96,82 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
         "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
       }}
     >
-      {/* <TextField
+      <FormControl sx={{ gridColumn: "span 4" }}>
+        <InputLabel id="MaintenanceTaskTypes" color="grey">
+          Maintenance Task Type
+        </InputLabel>
+        <Select
+          color="grey"
+          labelId="MaintenanceTaskTypes"
+          id="maintenanceTaskTypes"
+          helperText="Please select your Maintenance Task Type"
+          variant="filled"
+          label="Maintenance Task Type"
+          onChange={handleMaintenanceTaskChange}
+        >
+          {maintenanceTaskTypes.map((maintenanceTaskTypeModel) => (
+            <MenuItem value={maintenanceTaskTypeModel.maintenanceTaskTypeId}>
+              {maintenanceTaskTypeModel.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {/* <FormControl sx={{ gridColumn: "span 4" }}>
+        <InputLabel id="Rooms" color="grey">
+          Locations
+        </InputLabel>
+        <Select
+          color="grey"
+          labelId="Rooms"
+          id="rooms"
+          helperText="Please select a location"
+          variant="filled"
+          label="Room"
+          onChange={handleRoomChange}
+          sx={{ gridColumn: "span 4" }}
+        >
+          {roomModel.map((roomModel) => (
+            <MenuItem value={roomModel.roomId}>
+              {roomModel.roomLocation} - {roomModel.roomNumber}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>      */}
+
+      <TextField
         fullWidth
-        variant="filled"
-        placeholder="Maintenance Task ID"
-        name="maintenanceTaskId"
-        label="Maintenance Task ID"
-        type
-        {...register("maintenanceTaskId")}
-        error={errors.maintenanceTaskId ? true : false}
-        helperText={errors.maintenanceTaskId?.message}
-        value={values.maintenanceTaskId}
-        onChange={(event) =>
-          handleChange({ ...values, maintenanceTaskId: event.target.value })
-        }
-        sx={{ gridColumn: "span 4" }}
-      /> */}
-       <TextField
-        fullWidth
+        color="grey"
         variant="filled"
         placeholder="Name of Task"
         name="name"
         label="Name"
         type="string"
-        {...register("name")}
-        error={errors.name ? true : false}
-        helperText={errors.name?.message}
-        value={values.name}
-        onChange={(event) =>
-          handleChange({ ...values, name: event.target.value })
-        }
+        required
+        onChange={handleName}
         sx={{ gridColumn: "span 4" }}
       />
       <TextField
         fullWidth
+        color="grey"
         variant="filled"
-        placeholder="Maintenance Task Location"
-        name="location"
-        label="Maintenance Task Loction"
-        type
-        {...register("location")}
-        error={errors.location ? true : false}
-        helperText={errors.location?.message}
-        value={values.location}
-        onChange={(event) =>
-          handleChange({ ...values, location: event.target.value })
-        }
+        placeholder="Description of Task"
+        name="description"
+        label="Description"
+        type="string"
+        onChange={handleDescription}
         sx={{ gridColumn: "span 4" }}
       />
       <TextField
         name="maintenanceTaskDueDate"
         type="date"
         required
-        {...register("maintenanceTaskDueDate")}
-        error={errors.maintenanceTaskDueDate ? true : false}
-        helperText={errors.maintenanceTaskDueDate?.message}
-        value={values.maintenanceTaskDueDate}
-        onChange={(event) =>
-          handleChange({ ...values, maintenanceTaskDueDate: event.target.value })
-        }
+        onChange={handleMaintenanceTaskDueDate}
         sx={{ gridColumn: "span 4" }}
       />
-        <TextField
-        fullWidth
-        variant="filled"
-        placeholder="Description of Task"
-        name="description"
-        label="Description"
-        type="string"
-        {...register("description")}
-        error={errors.description ? true : false}
-        helperText={errors.description?.message}
-        value={values.description}
-        onChange={(event) =>
-          handleChange({ ...values, description: event.target.value })
-        }
-        sx={{ gridColumn: "span 4" }}
-      />
+    
     </Box>
   );
-
   return (
     <BasicModal
       open={open}
@@ -142,9 +179,10 @@ const CreateMaintenanceTaskModal = ({ open, onClose, addNewMaintenanceTask }) =>
       title="New Maintenance Task"
       subTitle="Fill out all the following fields to create a new Maintenance Task."
       content={getContent()}
-      onSubmit={handleSubmit(addMaintenanceTask)}
+      onSubmit={handleSubmit}
     />
   );
 };
+
 
 export default CreateMaintenanceTaskModal;
