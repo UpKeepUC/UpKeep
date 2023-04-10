@@ -12,7 +12,7 @@ const columns = [
 ];
 
 const inventoryItemTableStyles = {
-    height: '650px',
+    height: '300px',
 };
 
 function InventoryTable (props) {

@@ -13,7 +13,7 @@ import DataTable from '../common/dataTable';
 const location = 'First floor: Room 101';
 
 const columns = [
-    { field: 'maintenanceTaskId', headerName: 'Id', flex: 1 },
+    { field: 'maintenanceTaskId', headerName: 'Id', type: "number", headerAlign: "left", align: "left",},
     { field: 'location', headerName: 'Location', flex: 1, valueGetter: () => 'Lobby' },
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'description', headerName: 'Description', flex: 1 },
