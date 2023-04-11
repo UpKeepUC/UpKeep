@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Web;
 using UpKeep.Services.Interfaces;
 
 namespace UpKeep.Controllers
@@ -19,8 +20,9 @@ namespace UpKeep.Controllers
 
         [HttpPost, ActionName("GenerateQRCodeForInventoryItem")]
         public async Task<IActionResult> GenerateQRCodeForInventoryItem(string link)
-        {          
-            return Ok( File(await _qrCodeService.GenerateQRCodeForInventoryItem(link), "image/png"));
+        {
+            var decodedLink = HttpUtility.UrlDecode(link); 
+            return Ok( File(await _qrCodeService.GenerateQRCodeForInventoryItem(decodedLink), "image/png"));
         }
     }
 
