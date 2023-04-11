@@ -63,10 +63,9 @@ namespace UpKeep.Services
             return await upKeepDBContext.AddMaintenanceTask(model);
         }
 
-        public async Task<int> DeleteMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTaskModel)
+        public async Task<int> DeleteMaintenanceTask(int id)
         {
-            var model = mapper.Map<MaintenanceTask>(maintenanceTaskModel);
-            return await upKeepDBContext.DeleteMaintenanceTask(model);
+            return await upKeepDBContext.DeleteMaintenanceTask(id);
         }
     }
 }

@@ -148,10 +148,15 @@ namespace UpKeepData.Data
             return await SaveChangesAsync();
         }
 
-        public async Task<int> DeleteMaintenanceTask(MaintenanceTask maintenanceTask)
+        public async Task<int> DeleteMaintenanceTask(int id)
         {
-            maintenanceTasks.Remove(maintenanceTask);
-            return await SaveChangesAsync();
+            var mt = maintenanceTasks.Where(x => x.MaintenanceTaskId == id).FirstOrDefault();
+            if(mt != null)
+            {
+                maintenanceTasks.Remove(mt);
+                return await SaveChangesAsync();
+            }
+            return -1;
         }
     }
 }

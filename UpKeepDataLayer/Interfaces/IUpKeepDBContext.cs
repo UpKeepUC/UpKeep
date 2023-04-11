@@ -16,7 +16,7 @@ namespace UpKeepData.Interfaces
         Task<ICollection<InventoryItem>> GetInventoryItemByRoomId(int id);
         Task<int> UpdateInventoryItem(InventoryItem inventoryItem);
         Task<int> AddInventoryItem(InventoryItem inventoryItem);
-        Task<int> DeleteInventoryItem(InventoryItem inventoryItem);
+        Task<int> DeleteInventoryItem(int id);
         #endregion
 
         #region Inventory Item Types
@@ -35,7 +35,7 @@ namespace UpKeepData.Interfaces
         Task<MaintenanceTask> GetMaintenanceTaskById(int id);
         Task<int> UpdateMaintenanceTask(MaintenanceTask maintenanceTask);
         Task<int> AddMaintenanceTask(MaintenanceTask maintenanceTask);
-        Task<int> DeleteMaintenanceTask(MaintenanceTask maintenanceTask);
+        Task<int> DeleteMaintenanceTask(int id);
         #endregion
 
         #region Maintenance Task Type

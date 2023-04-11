@@ -9,7 +9,7 @@ namespace UpKeep.Services.Interfaces
         Task<ICollection<InventoryItemModel>> GetInventoryItemModelByRoomId(int id);
         Task<int> UpdateInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel);
         Task<int> AddInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel);
-        Task<int> DeleteInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel);
+        Task<int> DeleteInventoryItem(int id);
   
     }
 }

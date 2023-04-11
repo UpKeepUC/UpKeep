@@ -54,9 +54,9 @@ namespace UpKeep.Controllers
 
         [HttpPost, ActionName("DeleteInventoryItem")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteInventoryItem(InventoryItemAddOrUpdateModel inventoryItemModel)
+        public async Task<IActionResult> DeleteInventoryItem(int id)
         {
-            return Ok(await _inventoryItemService.DeleteInventoryItem(inventoryItemModel));
+            return Ok(await _inventoryItemService.DeleteInventoryItem(id));
         }
     }
 }

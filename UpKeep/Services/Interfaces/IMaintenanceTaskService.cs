@@ -12,6 +12,6 @@ namespace UpKeep.Services.Interfaces
         Task<int> LinkMaintenanceTaskToInventoryItem(LinkInventoryToMaintenanceModel link);
         Task<int> UpdateMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTask);
         Task<int> AddMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTaskModel);
-        Task<int> DeleteMaintenanceTask(MaintenanceTaskAddOrUpdateModel maintenanceTaskModel);
+        Task<int> DeleteMaintenanceTask(int id);
     }
 }

@@ -67,10 +67,15 @@ namespace UpKeepData.Data
             return await SaveChangesAsync();
         }
 
-        public async Task<int> DeleteInventoryItem(InventoryItem inventoryItem)
+        public async Task<int> DeleteInventoryItem(int id)
         {
-            InventoryItems.Remove(inventoryItem);
-            return await SaveChangesAsync();
+            var ii = await InventoryItems.Where(x => x.InventoryItemId == id).FirstOrDefaultAsync();
+            if(ii!= null)
+            {
+                InventoryItems.Remove(ii);
+                return await SaveChangesAsync();
+            }
+            return -1;
         }
     } 
 }
