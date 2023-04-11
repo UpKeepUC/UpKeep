@@ -52,7 +52,7 @@ namespace UpKeep.Controllers
             return Ok(await _inventoryItemService.AddInventoryItem(inventoryItemModel));
         }
 
-        [HttpPost, ActionName("DeleteInventoryItem")]
+        [HttpGet, ActionName("DeleteInventoryItem")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteInventoryItem(int id)
         {
